@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">CZ2006</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">EzMeet</string>
+    <string name="nav_header_subtitle">Good Morning!</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_meet">Meet</string>
+    <string name="menu_spaceout">Space Out</string>
+    <string name="menu_busarrival">Bus Arrival</string>
+    <string name="menu_trainservice">Train Service Alerts</string>
+    <string name="menu_guide">Guide</string>
+</resources>
