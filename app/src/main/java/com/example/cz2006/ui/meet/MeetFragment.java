@@ -1,6 +1,8 @@
 package com.example.cz2006.ui.meet;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import com.example.cz2006.ui.meet.TrafficIncidents;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class MeetFragment extends Fragment {
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -37,7 +50,16 @@ public class MeetFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            TrafficIncidents trafficIncidents = new TrafficIncidents();
+            String[] Type = trafficIncidents.getType();
+            double[] Latitude = trafficIncidents.getLatitude();
+            double[] Longitude = trafficIncidents.getLongitude();
+            String[] Message = trafficIncidents.getMessage();
             LatLng singapore = new LatLng(1.3521, 103.8198);
+            for(int i = 0; i < Latitude.length ;i++){
+                LatLng temp = new LatLng(Latitude[i], Longitude[i]);
+                googleMap.addMarker(new MarkerOptions().position(temp).title(Message[i]));
+            }
             //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(singapore));
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(10.0f));
