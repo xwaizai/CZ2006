@@ -3,16 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_Studio_Projects/app/src/main/res/drawable/ic_baseline_warning_24.xml" value="0.3828125" />
+        <entry key="..\:/Android_Studio_Projects/app/src/main/res/drawable/ic_baseline_warning_amber_24.xml" value="0.2064814814814815" />
+        <entry key="..\:/Android_Studio_Projects/app/src/main/res/drawable/toggle_selector.xml" value="0.2064814814814815" />
+        <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/activity_dummy.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/app_bar_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/content_dummy.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/content_main.xml" value="0.26358695652173914" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/fragment_busarrival.xml" value="0.20520833333333333" />
+        <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/fragment_first.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/fragment_guide.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/fragment_home.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/fragment_maps.xml" value="0.19114583333333332" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/fragment_meet.xml" value="0.20520833333333333" />
+        <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/fragment_second.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/fragment_spaceout.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/layout/fragment_train.xml" value="0.26358695652173914" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android_Studio_Projects/app/src/main/res/menu/main.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3828125" />
       </map>
     </option>
