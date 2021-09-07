@@ -35,6 +35,7 @@ public class BusarrivalFragment extends Fragment {
                 textView.setText(s);
             }
         });
+        BusArrival busArrival = new BusArrival();
         return root;
     }
 
