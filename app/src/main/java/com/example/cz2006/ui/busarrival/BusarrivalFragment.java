@@ -10,12 +10,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.widget.SearchView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -42,13 +48,14 @@ public class BusarrivalFragment extends Fragment {
         binding = FragmentBusarrivalBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textBusarrival;
+        /*final TextView textView = binding.textBusarrival;
         busarrivalViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        }
+        );*/
 
         return root;
     }
@@ -64,6 +71,8 @@ public class BusarrivalFragment extends Fragment {
         inflater.inflate(R.menu.search, menu);
         MenuItem searchItem = menu.findItem(R.id.search);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+
 
         if (searchItem != null) {
             searchView = (SearchView) searchItem.getActionView();
@@ -81,7 +90,31 @@ public class BusarrivalFragment extends Fragment {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     Log.d("onQueryTextSubmit", query);
+
                     BusArrival busArrival = new BusArrival();
+
+                    int[] ServiceNo = busArrival.getServiceNo();
+                    String[] NextBus = busArrival.getNextBus();
+                    String[] NextBus2 = busArrival.getNextBus2();
+                    String[] NextBus3 = busArrival.getNextBus3();
+                    String[] Feature = busArrival.getFeature();
+                    String[] Type = busArrival.getType();
+                    String[] Load = busArrival.getLoad();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putIntArray("ServiceNo",ServiceNo);
+                    bundle.putStringArray("NextBus",NextBus);
+                    bundle.putStringArray("NextBus2",NextBus2);
+                    bundle.putStringArray("NextBus3",NextBus3);
+                    bundle.putStringArray("Feature",Feature);
+                    bundle.putStringArray("Type",Type);
+                    bundle.putStringArray("Load",Load);
+
+                    BusResultsFragment busResultsFragment = new BusResultsFragment();
+                    busResultsFragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, busResultsFragment);
+                    fragmentTransaction.commit();
 
                     return true;
                 }

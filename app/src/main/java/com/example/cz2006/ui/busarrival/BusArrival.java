@@ -31,6 +31,34 @@ public class BusArrival {
             e.printStackTrace();
         }
     }
+    public int[] getServiceNo(){
+        return ServiceNo;
+    }
+
+    public String[] getNextBus(){
+        return NextBus;
+    }
+
+    public String[] getNextBus2(){
+        return NextBus2;
+    }
+
+    public String[] getNextBus3(){
+        return NextBus3;
+    }
+
+    public String[] getFeature(){
+        return Feature;
+    }
+
+    public String[] getType(){
+        return Type;
+    }
+
+    public String[] getLoad(){
+        return Load;
+    }
+
     private String MyGETRequest(int buscode) throws IOException, JSONException
 
     {
