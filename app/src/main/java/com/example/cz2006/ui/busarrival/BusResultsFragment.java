@@ -110,6 +110,7 @@ public class BusResultsFragment extends Fragment {
                             break;
 
                     }
+                    row.setPadding(1,10,1,1);
                     onerow[i].setPadding(30,20,5,5);
                     row.setLayoutParams(params2);
                 }
