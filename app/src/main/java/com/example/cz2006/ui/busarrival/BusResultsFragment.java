@@ -97,6 +97,8 @@ public class BusResultsFragment extends Fragment {
                                 minutes = timestamptominutes(bundle.getStringArray("NextBus")[j]);
                                 if(Load[j].equals("SEA")) {
                                     onerow[i].setTextColor(Color.parseColor("#84E296"));
+                                }else if(Load[j].equals("LSD")){
+                                    onerow[i].setTextColor(Color.parseColor("#721817"));
                                 }
                             } else {
                                 minutes = timestamptominutes(bundle.getStringArray("NextBus" + Integer.toString(i-2))[j]);
