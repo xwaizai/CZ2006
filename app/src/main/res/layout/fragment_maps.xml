@@ -9,7 +9,14 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.meet.MeetFragment"></fragment>
+        tools:context=".ui.meet.MeetFragment" />
+    <fragment
+        android:id="@+id/cluster"
+        android:name="com.example.cz2006.ui.covid_cluster.ClusterInfoUI"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.covid_cluster.ClusterInfoUI"
+        />
 
     <ToggleButton
         android:id="@+id/trafficincidentstoggle"

@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.cz2006.ui.covid_cluster.WebScrapper;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -16,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cz2006.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
