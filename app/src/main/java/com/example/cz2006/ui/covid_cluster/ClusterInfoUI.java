@@ -1,5 +1,6 @@
 package com.example.cz2006.ui.covid_cluster;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
 
-public class ClusterInfoUI extends Fragment implements OnMapReadyCallback, IEventCaller {
+public class ClusterInfoUI extends Fragment implements OnMapReadyCallback {
     private GoogleMap m_GMap;
     private ArrayList<Marker> m_ListOfCOVIDMarkers = new ArrayList<>();
     private WebScrapper m_WebScrapper;
@@ -34,7 +35,7 @@ public class ClusterInfoUI extends Fragment implements OnMapReadyCallback, IEven
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        m_WebScrapper = new WebScrapper(this::EventCallback);
+        m_WebScrapper = new WebScrapper();
     }
 
     @Override
@@ -62,7 +63,21 @@ public class ClusterInfoUI extends Fragment implements OnMapReadyCallback, IEven
     }
 
     @Override
-    public void EventCallback() {
+    public void onStart() {
+        super.onStart();
+        Activity myActivity = getActivity();
+        new Thread() {
+            public void run()
+            {
+                myActivity.runOnUiThread(() -> {
+                    while (!m_WebScrapper.getIsDone());
+                    SetMarkers();
+                });
+            }
+        }.start();
+    }
+
+    public void SetMarkers() {
         // have to put all faith that m_GMap exists!
         for (PlaceInfo clusterPlace : m_WebScrapper.getClusterList())
         {

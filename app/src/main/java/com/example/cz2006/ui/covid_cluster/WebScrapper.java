@@ -24,14 +24,18 @@ public class WebScrapper {
     List<PlaceInfo> m_ListOfClusterDetails = new ArrayList<>();
 
     Document m_MyDoc;
-    IEventCaller m_CallBackFunction;
+    boolean m_IsDone = false;
 
-    public WebScrapper(IEventCaller _callBackFunc)
+    public boolean getIsDone()
     {
-        m_CallBackFunction = _callBackFunc;
-        Thread webThread = new Thread(this::scrapeWebsite);
-        webThread.start();
+        return m_IsDone;
+    }
 
+
+    public WebScrapper()
+    {
+        Thread m_WebThread = new Thread(this::scrapeWebsite);
+        m_WebThread.start();
     }
 
     public List<PlaceInfo> getClusterList()
@@ -109,6 +113,6 @@ public class WebScrapper {
         {
             e.printStackTrace();
         }
-        m_CallBackFunction.EventCallback();
+        m_IsDone = true;
     }
 }
