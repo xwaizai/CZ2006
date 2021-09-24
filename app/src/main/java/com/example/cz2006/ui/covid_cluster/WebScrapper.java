@@ -47,7 +47,7 @@ public class WebScrapper {
     private synchronized void scrapeWebsite()
     {
         try {
-            m_MyDoc = Jsoup.connect(m_URL).timeout(6000).get();
+            m_MyDoc = Jsoup.connect(m_URL).get();
             Elements tableRows = m_MyDoc.getElementsByTag("tr");
             Pattern pattern = Pattern.compile("(Case)|(Cluster)", Pattern.CASE_INSENSITIVE);
             Pattern statusPattern = Pattern.compile("(OK)", Pattern.CASE_INSENSITIVE);

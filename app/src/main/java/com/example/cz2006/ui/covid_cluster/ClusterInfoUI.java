@@ -70,7 +70,7 @@ public class ClusterInfoUI extends Fragment implements OnMapReadyCallback {
             public void run()
             {
                 myActivity.runOnUiThread(() -> {
-                    while (!m_WebScrapper.getIsDone());
+                    while (!m_WebScrapper.getIsDone() && m_GMap != null);
                     SetMarkers();
                 });
             }
