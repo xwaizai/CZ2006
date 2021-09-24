@@ -1,8 +1,7 @@
 package com.example.cz2006.ui.covid_cluster;
 
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
+
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,6 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 
 
@@ -47,6 +50,34 @@ public class WebScrapper {
     private synchronized void scrapeWebsite()
     {
         try {
+            // Trying to solve te SSL issue!!!!!
+            // Create a trust manager that does not validate certificate chains like the default
+
+            TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers()
+                        {
+                            return null;
+                        }
+                        public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType)
+                        {
+                            //No need to implement.
+                        }
+                        public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType)
+                        {
+                            //No need to implement.
+                        }
+                    }
+            };
+
+            // Install the all-trusting trust manager
+            // Trying to solve te SSL issue!!!!!
+
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
             m_MyDoc = Jsoup.connect(m_URL).get();
             Elements tableRows = m_MyDoc.getElementsByTag("tr");
             Pattern pattern = Pattern.compile("(Case)|(Cluster)", Pattern.CASE_INSENSITIVE);
