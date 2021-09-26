@@ -1,8 +1,5 @@
 package com.example.cz2006.ui.covid_cluster;
 
-
-
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -14,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-
 
 public class WebScrapper {
     // to connect to the latest URL of MOH website
@@ -103,9 +98,11 @@ public class WebScrapper {
                 double latPos = locationObj.getDouble("lat");
                 // then lng
                 double lngPos = locationObj.getDouble("lng");
+                // get the formatted address!
+                String formattedAddress = placeObj.getString("formatted_address");
                 // and lastly the name
                 String placeName = placeObj.getString("name");
-                m_ListOfClusterDetails.add(new PlaceInfo(placeName, latPos, lngPos));
+                m_ListOfClusterDetails.add(new PlaceInfo(placeName, latPos, lngPos, formattedAddress));
             }
         }
         catch (Exception e)

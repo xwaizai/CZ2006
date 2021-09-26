@@ -7,10 +7,13 @@ public class PlaceInfo {
 
     public double m_Long;
 
-    public PlaceInfo(String _name, double _lat, double _long)
+    public String m_Address = "";
+
+    public PlaceInfo(String _name, double _lat, double _long, String _address)
     {
         m_Name = _name;
         m_Lat = _lat;
         m_Long = _long;
+        m_Address = _address;
     }
 }
