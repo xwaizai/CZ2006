@@ -14,11 +14,11 @@ import java.util.regex.Pattern;
 
 public class WebScrapper {
     // to connect to the latest URL of MOH website
-    String m_URL = "https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(18-sep-2021)";
-    List<PlaceInfo> m_ListOfClusterDetails = new ArrayList<>();
+    private String m_URL = "https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(18-sep-2021)";
+    private List<PlaceInfo> m_ListOfClusterDetails = new ArrayList<>();
 
-    Document m_MyDoc;
-    boolean m_IsDone = false;
+    private Document m_MyDoc;
+    private boolean m_IsDone = false;
 
     public boolean getIsDone()
     {

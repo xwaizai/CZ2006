@@ -27,17 +27,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
 
 public class ClusterInfoUI extends Fragment implements OnMapReadyCallback, GoogleMap.InfoWindowAdapter {
     private GoogleMap m_GMap;
-    private ArrayList<Marker> m_ListOfCOVIDMarkers = new ArrayList<>();
     private WebScrapper m_WebScrapper;
-
-    private static final int COVID_MARKER_TAG = 420;
 
     private Dictionary<String, PlaceInfo> m_ID_ClusterInfo = new Hashtable<>();
     private View m_COVIDInfoBox;
@@ -86,13 +82,13 @@ public class ClusterInfoUI extends Fragment implements OnMapReadyCallback, Googl
             {
                 myActivity.runOnUiThread(() -> {
                     while (!m_WebScrapper.getIsDone() || m_GMap == null);
-                    SetMarkers();
+                    setMarkers();
                 });
             }
         }.start();
     }
 
-    public void SetMarkers() {
+    private void setMarkers() {
         // to set up the markers and bitmaps
         Context context = getContext();
         Drawable background = ContextCompat.getDrawable(context, R.drawable.ic_outline_brightness_1_24);
@@ -112,7 +108,6 @@ public class ClusterInfoUI extends Fragment implements OnMapReadyCallback, Googl
                             .title("Cluster Location")
                             .snippet(clusterPlace.m_Name)
             );
-            cluserMarker.setTag(COVID_MARKER_TAG);
             // store it as key then can set the custom window
             m_ID_ClusterInfo.put(cluserMarker.getId(), clusterPlace);
         }
