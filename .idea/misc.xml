@@ -36,7 +36,13 @@
         <entry key="..\:/cz2006_proj/app/src/main/res/drawable/ic_baseline_error_24.xml" value="0.14635416666666667" />
         <entry key="..\:/cz2006_proj/app/src/main/res/drawable/ic_baseline_warning_amber_24.xml" value="0.1824074074074074" />
         <entry key="..\:/cz2006_proj/app/src/main/res/drawable/ic_outline_brightness_1_24.xml" value="0.1824074074074074" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/drawable/layout_round_bg.xml" value="0.5125" />
         <entry key="..\:/cz2006_proj/app/src/main/res/layout/covid_infobox.xml" value="0.9" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/fhgmh.xml" value="0.42617753623188404" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/fragment_bus_results.xml" value="0.33" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/fragment_car_nav_ui.xml" value="0.33" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/fragment_car_u_i_list_dialog.xml" value="0.49166666666666664" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/fragment_car_u_i_list_dialog_item.xml" value="0.49166666666666664" />
         <entry key="..\:/cz2006_proj/app/src/main/res/layout/fragment_cluster_info_u_i.xml" value="0.49166666666666664" />
         <entry key="..\:/cz2006_proj/app/src/main/res/layout/fragment_lines.xml" value="0.49166666666666664" />
         <entry key="..\:/cz2006_proj/app/src/main/res/layout/fragment_maps.xml" value="0.49166666666666664" />

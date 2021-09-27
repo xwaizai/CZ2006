@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.cz2006.GlobalHolder;
 import com.example.cz2006.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -70,6 +71,7 @@ public class ClusterInfoUI extends Fragment implements OnMapReadyCallback, Googl
         // finally managed to get google map
         m_GMap = googleMap;
         m_GMap.setInfoWindowAdapter(this);
+        GlobalHolder.getInstance().m_GMap = googleMap;
     }
 
     @Override

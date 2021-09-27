@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="left"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/layout_round_bg"
+    >
+
+
+    <TextView
+        android:id="@+id/car_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21 min"
+        android:textAlignment="textStart"
+        android:textColor="@color/dark_green"
+        android:paddingLeft="10dp"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/car_dist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(19.2km)"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:layout_toRightOf="@id/car_time"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:id="@+id/fastest_route_car"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/car_time"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:text="Fastest route now due to traffic conditions"
+        android:textColor="@color/black"
+        android:textSize="14dp" />
+
+    <Button
+        android:id="@+id/open_google_map_but"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fastest_route_car"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="105dp"
+        android:layout_marginLeft="105dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="105dp"
+        android:text="Open In Google Map"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/blue"
+        />
+
+</RelativeLayout>
