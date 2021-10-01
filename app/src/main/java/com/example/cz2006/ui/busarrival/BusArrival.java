@@ -31,6 +31,13 @@ public class BusArrival {
             e.printStackTrace();
         }
     }
+    public BusArrival(int query){
+        try{
+            MyGETRequest(query);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     public int[] getServiceNo(){
         return ServiceNo;
     }
@@ -114,14 +121,14 @@ public class BusArrival {
 
             }
             //Log.d("testing json","testing here " + jObject.getString("ServiceNo"));
-            Log.d("testing json","JSON String Result " + jArray);
+            /*Log.d("testing json","JSON String Result " + jArray);
             Log.d("testing json","JSON String Result " + ServiceNo[0]);
             Log.d("testing json","JSON String Result " + NextBus[0]);
             Log.d("testing json","JSON String Result " + NextBus2[0]);
             Log.d("testing json","JSON String Result " + NextBus3[0]);
             Log.d("testing json","JSON String Result " + Feature[0]);
             Log.d("testing json","JSON String Result " + Type[0]);
-            Log.d("testing json","JSON String Result " + Load[0]);
+            Log.d("testing json","JSON String Result " + Load[0]);*/
             //GetAndPost.POSTRequest(response.toString());
         } else {
             System.out.println("GET NOT WORKED");
