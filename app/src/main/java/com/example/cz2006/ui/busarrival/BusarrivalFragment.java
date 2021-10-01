@@ -84,6 +84,7 @@ public class BusarrivalFragment extends Fragment {
                         String[] Type = busArrival.getType();
                         String[] Load = busArrival.getLoad();
 
+
                         Bundle bundle = new Bundle();
                         bundle.putStringArray("ServiceNo",ServiceNo);
                         bundle.putStringArray("NextBus",NextBus);

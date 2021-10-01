@@ -130,9 +130,60 @@ public class BusArrival {
             Log.d("testing json","JSON String Result " + Type[0]);
             Log.d("testing json","JSON String Result " + Load[0]);*/
             //GetAndPost.POSTRequest(response.toString());
+            selectionSort(ServiceNo);
         } else {
             System.out.println("GET NOT WORKED");
         }
         return response.toString();
+    }
+    public void selectionSort (Comparable[] list)
+    {
+        int min;
+        Comparable temp;
+        String tmp;
+        for (int index = 0; index < list.length-1; index++)
+        {
+            min = index;
+            for (int scan = index+1; scan < list.length; scan++){
+                String string1 = (String) list[scan];
+                String string2 = (String) list[min];
+                string1 = string1.trim().replaceFirst("ABCDEeMT","");
+                string2 = string2.trim().replaceFirst("ABCDEeMT","");
+                if (Integer.parseInt(string1) < Integer.parseInt(string2)){
+                    min = scan;
+                    Log.d("selectionSort", Integer.toString(min));
+                }
+            }
+
+
+            // Swap the values
+            temp = list[min];
+            list[min] = list[index];
+            list[index] = temp;
+
+            tmp = NextBus[min];
+            NextBus[min] = NextBus[index];
+            NextBus[index] = tmp;
+
+            tmp = NextBus2[min];
+            NextBus2[min] = NextBus2[index];
+            NextBus2[index] = tmp;
+
+            tmp = NextBus3[min];
+            NextBus3[min] = NextBus3[index];
+            NextBus3[index] = tmp;
+
+            tmp = Feature[min];
+            Feature[min] = Feature[index];
+            Feature[index] = tmp;
+
+            tmp = Type[min];
+            Type[min] = Type[index];
+            Type[index] = tmp;
+
+            tmp = Load[min];
+            Load[min] = Load[index];
+            Load[index] = tmp;
+        }
     }
 }

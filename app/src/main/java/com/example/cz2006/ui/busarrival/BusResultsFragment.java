@@ -107,7 +107,13 @@ public class BusResultsFragment extends Fragment {
                             } else {
                                 minutes = timestamptominutes(bundle.getStringArray("NextBus" + Integer.toString(i-2))[j]);
                             }
-                            onerow[i].setText(Integer.toString(minutes));
+                            if(minutes>0) {
+                                onerow[i].setText(Integer.toString(minutes));
+                            }else if(minutes==0){
+                                onerow[i].setText("ARR");
+                            }else{
+                                onerow[i].setText("LEFT");
+                            }
                             onerow[i].setTextSize(30);
                             onerow[i].setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
                             row.addView(onerow[i]);
@@ -115,7 +121,7 @@ public class BusResultsFragment extends Fragment {
 
                     }
                     row.setPadding(1,10,1,1);
-                    onerow[i].setPadding(60,20,5,5);
+                    onerow[i].setPadding(50,20,5,5);
                     row.setLayoutParams(params2);
                 }
                 myLayout.addView(row);
