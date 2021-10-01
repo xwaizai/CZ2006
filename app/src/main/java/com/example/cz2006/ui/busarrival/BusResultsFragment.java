@@ -68,9 +68,9 @@ public class BusResultsFragment extends Fragment {
                             row.addView(onerow[i]);
                             break;
                         case 1:
-                            onerow[i].setText(Feature[j]);
-                            onerow[i].setTextSize(30);
-                            onerow[i].setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
+                            //onerow[i].setText(Feature[j]);
+                            //onerow[i].setTextSize(30);
+                            //onerow[i].setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
                             if(Feature[j].equals("WAB")){
                                 ImageView wheelchair = new ImageView(this.getActivity());
                                 wheelchair.setImageResource(R.drawable.ic_baseline_wheelchair_pickup_24);
