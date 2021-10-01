@@ -48,7 +48,7 @@ public class BusResultsFragment extends Fragment {
 
         if(bundle != null) {
             // handle your code here.
-            int[] ServiceNo = bundle.getIntArray("ServiceNo");
+            String[] ServiceNo = bundle.getStringArray("ServiceNo");
             String[] NextBus = bundle.getStringArray("NextBus");
             String[] NextBus2 = bundle.getStringArray("NextBus2");
             String[] NextBus3 = bundle.getStringArray("NextBus3");
@@ -63,7 +63,7 @@ public class BusResultsFragment extends Fragment {
                     onerow[i] = (TextView) new TextView(this.getActivity());
                     switch (i) {
                         case 0:
-                            onerow[i].setText(Integer.toString(ServiceNo[j]));
+                            onerow[i].setText(ServiceNo[j]);
                             onerow[i].setTextSize(30);
                             row.addView(onerow[i]);
                             break;

@@ -76,7 +76,7 @@ public class BusarrivalFragment extends Fragment {
                     if (isNumeric(query) && query.length() == 5){
                         BusArrival busArrival = new BusArrival(Integer.parseInt(query));
 
-                        int[] ServiceNo = busArrival.getServiceNo();
+                        String[] ServiceNo = busArrival.getServiceNo();
                         String[] NextBus = busArrival.getNextBus();
                         String[] NextBus2 = busArrival.getNextBus2();
                         String[] NextBus3 = busArrival.getNextBus3();
@@ -85,7 +85,7 @@ public class BusarrivalFragment extends Fragment {
                         String[] Load = busArrival.getLoad();
 
                         Bundle bundle = new Bundle();
-                        bundle.putIntArray("ServiceNo",ServiceNo);
+                        bundle.putStringArray("ServiceNo",ServiceNo);
                         bundle.putStringArray("NextBus",NextBus);
                         bundle.putStringArray("NextBus2",NextBus2);
                         bundle.putStringArray("NextBus3",NextBus3);

@@ -16,7 +16,7 @@ import java.net.URL;
 
 public class BusArrival {
 
-    private int[] ServiceNo;
+    private String[] ServiceNo;
     private String[] NextBus;
     private String[] NextBus2;
     private String[] NextBus3;
@@ -38,7 +38,7 @@ public class BusArrival {
             e.printStackTrace();
         }
     }
-    public int[] getServiceNo(){
+    public String[] getServiceNo(){
         return ServiceNo;
     }
 
@@ -93,7 +93,7 @@ public class BusArrival {
             // print result
             JSONObject jObject = new JSONObject(response.toString());
             JSONArray jArray = (JSONArray) new JSONTokener(jObject.getString("Services")).nextValue();
-            ServiceNo = new int[jArray.length()];
+            ServiceNo = new String[jArray.length()];
             NextBus = new String[jArray.length()];
             NextBus2 = new String[jArray.length()];
             NextBus3 = new String[jArray.length()];
@@ -108,7 +108,7 @@ public class BusArrival {
                 // do some stuff....
                 Log.d("testing json","JSON String Result " + object);
 
-                ServiceNo[n] = object.getInt("ServiceNo");
+                ServiceNo[n] = object.getString("ServiceNo");
                 temp = object.getJSONObject("NextBus");
                 Feature[n] = temp.getString("Feature");
                 Type[n] = temp.getString("Type");
