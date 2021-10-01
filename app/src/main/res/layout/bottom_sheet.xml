@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/rounded_top_corners"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:elevation="5dp"
+    app:behavior_peekHeight="30dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/postalCodeInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/postal_code"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/transport_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:singleSelection="true"
+        app:checkedButton="@+id/carOption"
+        app:selectionRequired="true">
+
+        <Button
+            android:id="@+id/carOption"
+            style="@style/Widget.App.Button.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:icon="@drawable/ic_baseline_directions_car"
+            app:iconGravity="textStart"
+
+            app:iconSize="32dp" />
+
+        <Button
+            android:id="@+id/busOption"
+            style="@style/Widget.App.Button.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:icon="@drawable/ic_baseline_directions_bus_24"
+            app:iconGravity="textStart"
+            app:iconSize="32dp"/>
+
+        <Button
+            android:id="@+id/trainOption"
+            style="@style/Widget.App.Button.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:icon="@drawable/ic_baseline_train_24"
+            app:iconGravity="textStart"
+            app:iconSize="32dp"/>
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Travel Time(mins)" />
+
+    <!-- Discrete slider -->
+    <com.google.android.material.slider.Slider
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stepSize="5.0"
+        android:valueFrom="0.0"
+        android:valueTo="100.0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/green"
+            android:text="Add"
+            android:textColor="@color/black"
+            app:cornerRadius="15dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/orange"
+            android:text="Go"
+            android:textColor="@color/black"
+            app:cornerRadius="15dp" />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent">
 
     <fragment
         android:id="@+id/map"
@@ -10,26 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.meet.MeetFragment" />
+
     <fragment
         android:id="@+id/cluster"
         android:name="com.example.cz2006.ui.covid_cluster.ClusterInfoUI"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.covid_cluster.ClusterInfoUI"
-        />
+        tools:context=".ui.covid_cluster.ClusterInfoUI" />
 
-    <ToggleButton
-        android:id="@+id/trafficincidentstoggle"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="33dp"
-        android:layout_marginBottom="56dp"
-        android:background="@drawable/toggle_selector"
-        android:textOff=""
-        android:textOn=""></ToggleButton>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/bottom_sheet" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/trafficincidentstoggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="top"
+            app:layout_anchorGravity="end"
+            app:layout_anchor="@+id/bottom_sheet"
+            app:useCompatPadding="true"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </RelativeLayout>

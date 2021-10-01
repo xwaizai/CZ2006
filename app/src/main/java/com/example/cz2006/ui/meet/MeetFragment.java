@@ -1,21 +1,21 @@
 package com.example.cz2006.ui.meet;
 
-import android.os.AsyncTask;
+import android.app.ActionBar;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 
 import com.example.cz2006.R;
@@ -26,26 +26,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import com.example.cz2006.ui.meet.TrafficIncidents;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
-public class MeetFragment extends Fragment implements CompoundButton.OnCheckedChangeListener{
+public class MeetFragment extends Fragment {
     private GoogleMap mMap;
     private ArrayList<Marker> trafficincidentsmarkers = new ArrayList<>();
 
+    private View rootView;
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-
-
 
         /**
          * Manipulates the map once available.
@@ -74,33 +66,38 @@ public class MeetFragment extends Fragment implements CompoundButton.OnCheckedCh
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+        rootView = inflater.inflate(R.layout.fragment_maps, container, false);
+
+        // Bottom Sheet
+        mBottomSheet = rootView.findViewById(R.id.bottom_sheet);
+        mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
+
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        return rootView;
     }
+
+    private BottomSheetBehavior mBottomSheetBehavior;
+    private LinearLayout mBottomSheet;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
-        ToggleButton togglebutton =view.findViewById(R.id.trafficincidentstoggle);
-        /*eventView.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View view) {
 
-                                         }
-                                     }
-        );*/
-        togglebutton.setOnCheckedChangeListener(this);
-    }
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.trafficincidentstoggle);
+        fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_baseline_warning_amber_24));
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
-        switch(buttonView.getId()){
-            case R.id.trafficincidentstoggle:
-                if(isChecked){
+        fab.setOnClickListener(new View.OnClickListener() {
+            boolean flag = true;
+
+            public void onClick(View v) {
+                if(flag){
                     TrafficIncidents trafficIncidents = new TrafficIncidents();
                     String[] Type = trafficIncidents.getType();
                     double[] Latitude = trafficIncidents.getLatitude();
@@ -112,14 +109,18 @@ public class MeetFragment extends Fragment implements CompoundButton.OnCheckedCh
                         Marker marker = mMap.addMarker(new MarkerOptions().position(temp).title(Message[i]));
                         trafficincidentsmarkers.add(marker);
                     }
+                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_baseline_warning_24));
+                    flag = false;
                 }
-                else {
+                else{
                     for(Marker m: trafficincidentsmarkers){
                         m.remove();
                     }
+                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_baseline_warning_amber_24));
+                    flag = true;
                 }
-                break;
-        }
 
+            }
+        });
     }
 }
