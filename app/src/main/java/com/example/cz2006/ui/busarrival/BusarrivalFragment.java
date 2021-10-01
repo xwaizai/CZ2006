@@ -84,6 +84,9 @@ public class BusarrivalFragment extends Fragment {
                         String[] Type = busArrival.getType();
                         String[] Load = busArrival.getLoad();
 
+                        if(ServiceNo.length==0){
+                            Toast.makeText(getContext(), "Sorry! No bus stop found!", Toast.LENGTH_LONG).show();
+                        }
 
                         Bundle bundle = new Bundle();
                         bundle.putStringArray("ServiceNo",ServiceNo);
