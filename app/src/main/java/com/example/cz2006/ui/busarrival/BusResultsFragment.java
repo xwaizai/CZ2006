@@ -75,6 +75,10 @@ public class BusResultsFragment extends Fragment {
                                 ImageView wheelchair = new ImageView(this.getActivity());
                                 wheelchair.setImageResource(R.drawable.ic_baseline_wheelchair_pickup_24);
                                 row.addView(wheelchair);
+                            }else{
+                                ImageView blank = new ImageView(this.getActivity());
+                                blank.setImageResource(R.drawable.ic_baseline_search_24);
+                                row.addView(blank);
                             }
                             break;
                         case 2:
@@ -111,7 +115,7 @@ public class BusResultsFragment extends Fragment {
 
                     }
                     row.setPadding(1,10,1,1);
-                    onerow[i].setPadding(30,20,5,5);
+                    onerow[i].setPadding(60,20,5,5);
                     row.setLayoutParams(params2);
                 }
                 myLayout.addView(row);
