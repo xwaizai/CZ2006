@@ -1,43 +1,34 @@
 package com.example.cz2006.ui.busarrival;
 
-import android.app.SearchManager;
-import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.LongDef;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-
-import com.example.cz2006.MainActivity;
 import com.example.cz2006.R;
 import com.example.cz2006.databinding.FragmentBusarrivalBinding;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class BusarrivalFragment extends Fragment {
 
+    private static final String TAG = "BusarrivialFragment";
 
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
@@ -45,6 +36,30 @@ public class BusarrivalFragment extends Fragment {
     private BusarrivalViewModel busarrivalViewModel;
     private FragmentBusarrivalBinding binding;
 
+    private ArrayList<String> mServiceNo = new ArrayList<>();
+    private ArrayList<String> mBusStopFirst = new ArrayList<>();
+    private ArrayList<String> mBusStopSecond = new ArrayList<>();
+    private ArrayList<String> mBusStopThird = new ArrayList<>();
+    
+    private ArrayList<String> mTypeOfBusFirst = new ArrayList<>();
+    private ArrayList<String> mTypeOfBusSecond = new ArrayList<>();
+    private ArrayList<String> mTypeOfBusThird= new ArrayList<>();
+
+    private ArrayList<Boolean> mFeatureFirst = new ArrayList<>();
+    private ArrayList<Boolean> mFeatureSecond = new ArrayList<>();
+    private ArrayList<Boolean> mFeatureThird= new ArrayList<>();
+
+    private ArrayList<String> mLoadFirst = new ArrayList<>();
+    private ArrayList<String> mLoadSecond = new ArrayList<>();
+    private ArrayList<String> mLoadThird= new ArrayList<>();
+    private BusarrivalFragment mContext;
+
+    private View root;
+    private SwipeRefreshLayout refreshView;
+
+    private RecyclerViewAdapter adapter;
+
+    private BusArrival busArrival;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,16 +68,10 @@ public class BusarrivalFragment extends Fragment {
                 new ViewModelProvider(this).get(BusarrivalViewModel.class);
 
         binding = FragmentBusarrivalBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
 
-        /*final TextView textView = binding.textBusarrival;
-        busarrivalViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        }
-        );*/
+        refreshView = root.findViewById(R.id.refreshView);
+
 
         TextInputEditText editText = binding.busstopquery;
         editText.setOnKeyListener(new View.OnKeyListener() {
@@ -74,34 +83,12 @@ public class BusarrivalFragment extends Fragment {
                     Log.d("onQueryTextSubmit", String.valueOf(editText.getEditableText()));
                     String query = String.valueOf(editText.getEditableText());
                     if (isNumeric(query) && query.length() == 5){
-                        BusArrival busArrival = new BusArrival(Integer.parseInt(query));
+                        busArrival = new BusArrival(Integer.parseInt(query));
+                        busResult();
 
-                        String[] ServiceNo = busArrival.getServiceNo();
-                        String[] NextBus = busArrival.getNextBus();
-                        String[] NextBus2 = busArrival.getNextBus2();
-                        String[] NextBus3 = busArrival.getNextBus3();
-                        String[] Feature = busArrival.getFeature();
-                        String[] Type = busArrival.getType();
-                        String[] Load = busArrival.getLoad();
+                        // Send all info to recycler view
+                        initRecyclerView();
 
-                        if(ServiceNo.length==0){
-                            Toast.makeText(getContext(), "Sorry! No bus stop found!", Toast.LENGTH_LONG).show();
-                        }
-
-                        Bundle bundle = new Bundle();
-                        bundle.putStringArray("ServiceNo",ServiceNo);
-                        bundle.putStringArray("NextBus",NextBus);
-                        bundle.putStringArray("NextBus2",NextBus2);
-                        bundle.putStringArray("NextBus3",NextBus3);
-                        bundle.putStringArray("Feature",Feature);
-                        bundle.putStringArray("Type",Type);
-                        bundle.putStringArray("Load",Load);
-
-                        BusResultsFragment busResultsFragment = new BusResultsFragment();
-                        busResultsFragment.setArguments(bundle);
-                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.fragment_container, busResultsFragment);
-                        fragmentTransaction.commit();
                     }else{
                         Toast.makeText(getContext(), "The bus stop code must be 5 digit numeric!", Toast.LENGTH_LONG).show();
                     }
@@ -111,15 +98,176 @@ public class BusarrivalFragment extends Fragment {
                 return false;
             }
         });
-        /*editText.setOnClickListener(new View.OnClickListener(){
+
+        refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View view){
+            public void onRefresh() {
+                // Load data to your RecyclerView
+                // clear old list
+                clearList();
 
-
+                // add new list
+                String query = String.valueOf(editText.getEditableText());
+                if (isNumeric(query) && query.length() == 5) {
+                    busArrival = new BusArrival(Integer.parseInt(query));
+                    busResult();
+                }
+                // notify adapter
+                refreshView.setRefreshing(false);
+                adapter.notifyDataSetChanged();
             }
-        });*/
+            });
 
         return root;
+    }
+
+    public void clearList(){
+        mServiceNo.clear();
+        mBusStopFirst.clear();
+        mBusStopSecond.clear();
+        mBusStopThird.clear();
+        mTypeOfBusFirst.clear();
+        mTypeOfBusSecond.clear();
+        mTypeOfBusThird.clear();
+        mFeatureFirst.clear();
+        mFeatureSecond.clear();
+        mFeatureThird.clear();
+        mLoadFirst.clear();
+        mLoadSecond.clear();
+        mLoadThird.clear();
+    }
+
+    public void busResult(){
+        String[] ServiceNo = busArrival.getServiceNo();
+        String[] NextBus1 = busArrival.getNextBus();
+        String[] NextBus2 = busArrival.getNextBus2();
+        String[] NextBus3 = busArrival.getNextBus3();
+        String[] Feature1 = busArrival.getFeature();
+        String[] Feature2 = busArrival.getFeature2();
+        String[] Feature3 = busArrival.getFeature3();
+        String[] Type1 = busArrival.getType();
+        String[] Type2 = busArrival.getType2();
+        String[] Type3 = busArrival.getType3();
+        String[] Load1 = busArrival.getLoad();
+        String[] Load2 = busArrival.getLoad2();
+        String[] Load3 = busArrival.getLoad3();
+        if(ServiceNo.length==0){
+            Toast.makeText(getContext(), "Sorry! No bus stop found!", Toast.LENGTH_LONG).show();
+        }
+
+        for (int j = 0; j < ServiceNo.length; j++) {
+            //ServiceNo
+            Log.d("buses", Arrays.toString(ServiceNo));
+            mServiceNo.add(ServiceNo[j]);
+
+            //Next Buses Minutes
+            Log.d("buses", Arrays.toString(NextBus1));
+            int minute = timestamptominutes(NextBus1[j]);
+            if (minute == -99)
+                mBusStopFirst.add("-");
+            else if (minute > 0)
+                mBusStopFirst.add(Integer.toString(minute));
+            else if (minute == 0)
+                mBusStopFirst.add("Arr");
+            else
+                mBusStopFirst.add("Left");
+
+            minute = timestamptominutes(NextBus2[j]);
+            if (minute == -99)
+                mBusStopSecond.add("-");
+            else if (minute > 0)
+                mBusStopSecond.add(Integer.toString(minute));
+            else if (minute == 0)
+                mBusStopSecond.add("Arr");
+            else
+                mBusStopSecond.add("Left");
+
+            minute = timestamptominutes(NextBus3[j]);
+            Log.d("Min,", Integer.toString(minute));
+            if (minute == -99)
+                mBusStopThird.add("-");
+            else if (minute > 0)
+                mBusStopThird.add(Integer.toString(minute));
+            else if (minute == 0)
+                mBusStopThird.add("Arr");
+            else
+                mBusStopThird.add("Left");
+
+            //Bus Type
+            String type = "";
+            if (Type1[j].equals("SD")) {
+                type = "Single";
+            } else if (Type1[j].equals("DD")) {
+                type = "Double";
+            }
+            mTypeOfBusFirst.add(type);
+
+            type = "";
+            if (Type2[j].equals("SD")) {
+                type = "Single";
+            } else if (Type2[j].equals("DD")) {
+                type = "Double";
+            }
+            mTypeOfBusSecond.add(type);
+
+            type = "";
+            if (Type3[j].equals("SD")) {
+                type = "Single";
+            } else if (Type3[j].equals("DD")) {
+                type = "Double";
+            }
+            mTypeOfBusThird.add(type);
+
+            //Feature - Handicap
+            boolean handicap = false;
+            if(Feature1[j].equals("WAB"))
+                handicap = true;
+            mFeatureFirst.add(handicap);
+
+            handicap = false;
+            if(Feature2[j].equals("WAB"))
+                handicap = true;
+            mFeatureSecond.add(handicap);
+
+            handicap = false;
+            if(Feature3[j].equals("WAB"))
+                handicap = true;
+            mFeatureThird.add(handicap);
+
+            //Load - Capacity
+            String load = "";
+            Log.d("buses", Arrays.toString(Load1));
+            if (Load1[j].equals("SEA")) {
+                load = "low";
+            }else if(Load1[j].equals("SDA")) {
+                load = "mid";
+            }else if(Load1[j].equals("LSD")) {
+                load = "high";
+            }
+            Log.d("After:", load);
+            mLoadFirst.add(load);
+
+            load = "";
+            if (Load2[j].equals("SEA")) {
+                load = "low";
+            }else if(Load2[j].equals("SDA")) {
+                load = "mid";
+            }else if(Load2[j].equals("LSD")) {
+                load = "high";
+            }
+            mLoadSecond.add(load);
+
+            load = "";
+            if (Load3[j].equals("SEA")) {
+                load = "low";
+            }else if(Load3[j].equals("SDA")) {
+                load = "mid";
+            }else if(Load3[j].equals("LSD")) {
+                load = "high";
+            }
+            mLoadThird.add(load);
+        }
+
     }
 
     @Override
@@ -127,66 +275,6 @@ public class BusarrivalFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
-    /*@Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search, menu);
-        MenuItem searchItem = menu.findItem(R.id.search);
-
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-
-
-
-        if (searchItem != null) {
-            searchView = (SearchView) searchItem.getActionView();
-
-        }
-        if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-
-            queryTextListener = new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    Log.d("onQueryTextChange", newText);
-
-                    return true;
-                }
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    Log.d("onQueryTextSubmit", query);
-
-                    BusArrival busArrival = new BusArrival();
-
-                    int[] ServiceNo = busArrival.getServiceNo();
-                    String[] NextBus = busArrival.getNextBus();
-                    String[] NextBus2 = busArrival.getNextBus2();
-                    String[] NextBus3 = busArrival.getNextBus3();
-                    String[] Feature = busArrival.getFeature();
-                    String[] Type = busArrival.getType();
-                    String[] Load = busArrival.getLoad();
-
-                    Bundle bundle = new Bundle();
-                    bundle.putIntArray("ServiceNo",ServiceNo);
-                    bundle.putStringArray("NextBus",NextBus);
-                    bundle.putStringArray("NextBus2",NextBus2);
-                    bundle.putStringArray("NextBus3",NextBus3);
-                    bundle.putStringArray("Feature",Feature);
-                    bundle.putStringArray("Type",Type);
-                    bundle.putStringArray("Load",Load);
-
-                    BusResultsFragment busResultsFragment = new BusResultsFragment();
-                    busResultsFragment.setArguments(bundle);
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, busResultsFragment);
-                    fragmentTransaction.commit();
-
-                    return true;
-                }
-            };
-            searchView.setOnQueryTextListener(queryTextListener);
-        }
-        super.onCreateOptionsMenu(menu, inflater);
-    }*/
 
     @Override
     public void onDestroyView() {
@@ -200,5 +288,36 @@ public class BusarrivalFragment extends Fragment {
         } catch(NumberFormatException e){
             return false;
         }
+
+    }
+
+    private void initRecyclerView(){
+        RecyclerView recycleView = root.findViewById(R.id.busRecyclerView);
+        adapter = new RecyclerViewAdapter(
+                mServiceNo, mBusStopFirst, mBusStopSecond, mBusStopThird,
+                mTypeOfBusFirst, mTypeOfBusSecond, mTypeOfBusThird,
+                mFeatureFirst, mFeatureSecond, mFeatureThird,
+                mLoadFirst, mLoadSecond, mLoadThird,this);
+        recycleView.setLayoutManager(new LinearLayoutManager(recycleView.getContext()));
+        recycleView.setAdapter(adapter);
+    }
+
+    private int timestamptominutes(String time){
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        if(time.equals(""))
+            return -99;
+        if(time.length()==0){
+            return -1;
+        }
+        String test = time.replace("T"," ");
+        Log.d("test",test);
+        test = test.substring(0,19);
+
+        Timestamp testnext = Timestamp.valueOf(test);
+        long milliseconds = testnext.getTime() - timestamp.getTime();
+        int seconds = (int) milliseconds / 1000;
+        int minutes = (seconds % 3600) / 60;
+
+        return minutes;
     }
 }

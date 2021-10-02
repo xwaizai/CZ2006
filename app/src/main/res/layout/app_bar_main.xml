@@ -8,21 +8,20 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
+    <include layout="@layout/content_main" />
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
-        <include layout="@layout/content_main" />
-
-        <com.google.android.material.appbar.AppBarLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:navigationIcon="@drawable/ic_baseline_dehaze_24"/>
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_baseline_dehaze_24"/>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

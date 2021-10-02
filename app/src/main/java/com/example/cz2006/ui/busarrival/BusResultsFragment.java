@@ -125,7 +125,7 @@ public class BusResultsFragment extends Fragment {
                     row.setLayoutParams(params2);
                 }
                 myLayout.addView(row);
-        }
+            }
 
         }
         //

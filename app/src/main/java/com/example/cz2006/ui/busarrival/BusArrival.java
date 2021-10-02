@@ -17,12 +17,22 @@ import java.net.URL;
 public class BusArrival {
 
     private String[] ServiceNo;
+    
     private String[] NextBus;
     private String[] NextBus2;
     private String[] NextBus3;
+    
     private String[] Feature;
+    private String[] Feature2;
+    private String[] Feature3;
+    
     private String[] Type;
+    private String[] Type2;
+    private String[] Type3;
+    
     private String[] Load;
+    private String[] Load2;
+    private String[] Load3;
 
     public BusArrival(){
         try{
@@ -58,13 +68,38 @@ public class BusArrival {
         return Feature;
     }
 
+    public String[] getFeature2(){
+        return Feature2;
+    }
+
+    public String[] getFeature3(){
+        return Feature3;
+    }
+
     public String[] getType(){
         return Type;
+    }
+
+    public String[] getType2(){
+        return Type2;
+    }
+
+    public String[] getType3(){
+        return Type3;
     }
 
     public String[] getLoad(){
         return Load;
     }
+
+    public String[] getLoad2(){
+        return Load2;
+    }
+    
+    public String[] getLoad3(){
+        return Load3;
+    }
+    
 
     private String MyGETRequest(int buscode) throws IOException, JSONException
 
@@ -92,14 +127,21 @@ public class BusArrival {
             } in .close();
             // print result
             JSONObject jObject = new JSONObject(response.toString());
+
             JSONArray jArray = (JSONArray) new JSONTokener(jObject.getString("Services")).nextValue();
             ServiceNo = new String[jArray.length()];
             NextBus = new String[jArray.length()];
             NextBus2 = new String[jArray.length()];
             NextBus3 = new String[jArray.length()];
             Feature = new String[jArray.length()];
+            Feature2 = new String[jArray.length()];
+            Feature3 = new String[jArray.length()];
             Type = new String[jArray.length()];
+            Type2 = new String[jArray.length()];
+            Type3 = new String[jArray.length()];
             Load = new String[jArray.length()];
+            Load2 = new String[jArray.length()];
+            Load3 = new String[jArray.length()];
 
             JSONObject temp;
             for(int n = 0; n < jArray.length(); n++)
@@ -116,8 +158,14 @@ public class BusArrival {
                 NextBus[n] = temp.getString("EstimatedArrival");
                 temp = object.getJSONObject("NextBus2");
                 NextBus2[n] = temp.getString("EstimatedArrival");
+                Feature2[n] = temp.getString("Feature");
+                Type2[n] = temp.getString("Type");
+                Load2[n] = temp.getString("Load");
                 temp = object.getJSONObject("NextBus3");
                 NextBus3[n] = temp.getString("EstimatedArrival");
+                Feature3[n] = temp.getString("Feature");
+                Type3[n] = temp.getString("Type");
+                Load3[n] = temp.getString("Load");
 
             }
             //Log.d("testing json","testing here " + jObject.getString("ServiceNo"));
@@ -177,13 +225,37 @@ public class BusArrival {
             Feature[min] = Feature[index];
             Feature[index] = tmp;
 
+            tmp = Feature2[min];
+            Feature2[min] = Feature2[index];
+            Feature2[index] = tmp;
+
+            tmp = Feature3[min];
+            Feature3[min] = Feature3[index];
+            Feature3[index] = tmp;
+
             tmp = Type[min];
             Type[min] = Type[index];
             Type[index] = tmp;
 
+            tmp = Type2[min];
+            Type2[min] = Type2[index];
+            Type2[index] = tmp;
+
+            tmp = Type3[min];
+            Type3[min] = Type3[index];
+            Type3[index] = tmp;
+
             tmp = Load[min];
             Load[min] = Load[index];
             Load[index] = tmp;
+
+            tmp = Load2[min];
+            Load2[min] = Load2[index];
+            Load2[index] = tmp;
+
+            tmp = Load3[min];
+            Load3[min] = Load3[index];
+            Load3[index] = tmp;
         }
     }
 }

@@ -2,22 +2,27 @@ package com.example.cz2006.ui.meet;
 
 import android.app.ActionBar;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 
+import com.example.cz2006.MainActivity;
 import com.example.cz2006.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,6 +41,10 @@ public class MeetFragment extends Fragment {
     private ArrayList<Marker> trafficincidentsmarkers = new ArrayList<>();
 
     private View rootView;
+
+    //Bottom Sheet
+    private BottomSheetBehavior mBottomSheetBehavior;
+    private LinearLayout mBottomSheet;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -77,15 +86,13 @@ public class MeetFragment extends Fragment {
         return rootView;
     }
 
-    private BottomSheetBehavior mBottomSheetBehavior;
-    private LinearLayout mBottomSheet;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }

@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity  {
         // Toolbar disable/enable title
         setSupportActionBar(binding.appBarMain.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(
+                new ColorDrawable(getResources().getColor(R.color.transparent)));
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;

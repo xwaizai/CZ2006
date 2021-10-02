@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
     tools:context=".ui.busarrival.BusarrivalFragment">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -28,11 +27,18 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshView"
         android:layout_width="match_parent"
-        android:layout_height="673dp"
-        android:layout_below="@+id/busTextField"
-        android:layout_marginTop="2dp" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/busTextField">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/busRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/busTextField" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
