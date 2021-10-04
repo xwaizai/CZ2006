@@ -61,6 +61,8 @@ public class BusarrivalFragment extends Fragment {
 
     private BusArrival busArrival;
 
+    private boolean viewPopulated = false;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -81,6 +83,13 @@ public class BusarrivalFragment extends Fragment {
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
                     Log.d("onQueryTextSubmit", String.valueOf(editText.getEditableText()));
+
+                    // To check if RecyclerView is already populated
+                    if(viewPopulated)
+                        clearList();
+                    else
+                        viewPopulated = true;
+
                     String query = String.valueOf(editText.getEditableText());
                     if (isNumeric(query) && query.length() == 5){
                         busArrival = new BusArrival(Integer.parseInt(query));
@@ -114,7 +123,7 @@ public class BusarrivalFragment extends Fragment {
                 }
                 // notify adapter
                 refreshView.setRefreshing(false);
-                adapter.notifyDataSetChanged();
+
             }
             });
 
@@ -135,6 +144,7 @@ public class BusarrivalFragment extends Fragment {
         mLoadFirst.clear();
         mLoadSecond.clear();
         mLoadThird.clear();
+        adapter.notifyDataSetChanged();
     }
 
     public void busResult(){
