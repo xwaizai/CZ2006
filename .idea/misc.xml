@@ -68,12 +68,14 @@
         <entry key="app/src/main/res/layout/fragment_details.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/fragment_guide.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/fragment_lines.xml" value="0.221875" />
-        <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.221875" />
-        <entry key="app/src/main/res/layout/fragment_meet.xml" value="0.39010416666666664" />
+        <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_meet.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_spaceout.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/layout/fragment_train.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/layout/hamburger.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/layout/layout_buslistitem.xml" value="0.25" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.3802083333333333" />
+        <entry key="app/src/main/res/layout/postal_code.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.335" />
         <entry key="app/src/main/res/menu/main.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/menu/search.xml" value="0.39010416666666664" />

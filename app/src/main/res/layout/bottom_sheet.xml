@@ -46,7 +46,6 @@
             android:layout_weight="1"
             app:icon="@drawable/ic_baseline_directions_car"
             app:iconGravity="textStart"
-
             app:iconSize="32dp" />
 
         <Button
