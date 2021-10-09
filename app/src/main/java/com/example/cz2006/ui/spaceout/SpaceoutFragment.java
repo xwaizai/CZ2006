@@ -34,7 +34,7 @@ public class SpaceoutFragment extends Fragment {
 
         //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         //StrictMode.setThreadPolicy(policy);
-        String url = "https://www.google.com";
+        String url = "https://covidsitrep.moh.gov.sg/";
         WebView view = (WebView) root.findViewById(R.id.webView);
         view.setWebViewClient( new WebViewClient());
         view.getSettings().setJavaScriptEnabled(true);
