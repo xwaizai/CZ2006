@@ -1,13 +1,12 @@
 package com.example.cz2006.ui.meet;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -33,11 +32,32 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+
+import java.io.BufferedReader;
+
+
+
+import java.io.InputStreamReader;
+
+
+import java.net.HttpURLConnection;
+
+import java.net.URL;
+
 import java.util.ArrayList;
 
 public class MeetFragment extends Fragment implements View.OnClickListener {
     private GoogleMap mMap;
     private ArrayList<Marker> trafficincidentsmarkers = new ArrayList<>();
+    private ArrayList<String> postcode = new ArrayList<>();
+    private ArrayList<String> travelType = new ArrayList<>();
+    private ArrayList<String> lat = new ArrayList<>();
+    private ArrayList<String> lng= new ArrayList<>();
+    private ArrayList<Integer> travelTime = new ArrayList<>();
 
     private View rootView;
     private ChipGroup chipGroup;
@@ -161,6 +181,61 @@ public class MeetFragment extends Fragment implements View.OnClickListener {
             //.... etc
         }
     }
+    private boolean checkValid(String postalText)
+    {
+        try {
+
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            URL urlForGetRequest = new URL("https://maps.googleapis.com/maps/api/geocode/json?address="
+                    +postalText+",+SG&key=AIzaSyDbPQ0ByGoYskLBVO0EvmEV_t1gGYNeZvw");
+
+
+            String readLine = null;
+            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
+            conection.setRequestMethod("GET");
+
+            int responseCode = conection.getResponseCode();
+
+            StringBuffer response = new StringBuffer();
+
+            if (responseCode == HttpURLConnection.HTTP_OK)
+            {
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(conection.getInputStream()));
+                while ((readLine = in.readLine()) != null) {
+                    response.append(readLine);
+                }
+                in.close();
+                // print result
+                JSONObject jObject = new JSONObject(response.toString());
+
+                if (jObject.getString("status").equals("OK"))
+                {
+                    JSONArray result = (JSONArray) new JSONTokener(jObject.getString("results")).nextValue();
+                    JSONObject r1 = result.getJSONObject(0);
+                    JSONObject geometry = r1.getJSONObject("geometry");
+                    JSONObject location = geometry.getJSONObject("location");
+                    this.lat.add(  location.getString("lat"));
+                    this.lng.add(  location.getString("lng"));
+                    Log.d( "In: ","IN");
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
+        catch(Exception e)
+        {
+
+            // TODO Auto-generated catch block
+            Toast.makeText(getContext(), "Enter valid postal code", Toast.LENGTH_SHORT).show();
+            Log.d( "Error: ",e.getMessage());
+            return false;
+
+        }
+    }
 
 
     private void retrieveInputs() {
@@ -180,16 +255,17 @@ public class MeetFragment extends Fragment implements View.OnClickListener {
         int time_selected = (int) timeSlider.getValue();
 
         // Check which button id is match to which
-        if(button.getId() == R.id.trainOption){
+        if (button.getId() == R.id.trainOption) {
             trans_selected = "train";
-        } else if(button.getId()  == R.id.busOption) {
+        } else if (button.getId() == R.id.busOption) {
             trans_selected = "bus";
-        } else if(button.getId()  == R.id.carOption) {
+        } else if (button.getId() == R.id.carOption) {
             trans_selected = "car";
         }
 
-        // Postal Code must be in 6 numerical digits
-        if(postalText.length() == 6 && postalText.matches("[0-9]+")){
+
+        if(checkValid(postalText))
+        {
             Toast.makeText(getContext(), "Add", Toast.LENGTH_SHORT).show();
 
             addNewChip(postalText, chipGroup, trans_selected);
@@ -197,9 +273,10 @@ public class MeetFragment extends Fragment implements View.OnClickListener {
             // save info to memory
             saveChipsToMem(postalText, trans_selected, time_selected);
         } else {
-            Toast.makeText(getContext(), "Please enter a numerical 6 digits postal code", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Please enter a valid postal code!", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void addNewChip(String text, ChipGroup chipGroup, String type) {
         Chip chip = (Chip) getLayoutInflater().inflate(R.layout.postal_code, chipGroup, false);
@@ -218,6 +295,30 @@ public class MeetFragment extends Fragment implements View.OnClickListener {
         chip.setOnCloseIconClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String removedpostal = (String) chip.getText();
+                int i;
+                for(i=0; i<postcode.size(); i++)
+                {
+                    if(postcode.get(i).equals(removedpostal))
+                    {
+                        break;
+                    }
+                }
+                postcode.remove(i);
+                travelType.remove(i);
+                lat.remove(i);
+                lng.remove(i);
+                travelTime.remove(i);
+
+                String show="";
+                int j;
+                for(j=0; j<postcode.size(); j++)
+                {
+                    Log.d( "onClick: ",postcode.get(j)+ "," + travelType.get(j) + "," +
+                    lat.get(j)+ "," + lng.get(j) + "," + travelTime.get(j));
+
+                }
+
                 chipGroup.removeView(chip);
             }
         });
@@ -225,5 +326,8 @@ public class MeetFragment extends Fragment implements View.OnClickListener {
 
     private void saveChipsToMem(String postal, String trans, int time) {
         // Store Data to Array? Singleton?
+        this.postcode.add(postal);
+        this.travelType.add(trans);
+        this.travelTime.add(time);
     }
 }
