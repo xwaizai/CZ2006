@@ -25,37 +25,41 @@
 
         <include layout="@layout/bottom_sheet" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
+            android:layout_marginHorizontal="10dp"
             android:orientation="horizontal"
             app:layout_anchor="@+id/bottom_sheet">
 
-            <include
-                layout="@layout/postal_code"
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/trafficincidentstoggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginBottom="0dp"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="bottom"/>
+                android:layout_alignParentRight="true"
+                android:layout_marginVertical="5dp"
+                app:fabSize="normal" />
 
-            <RelativeLayout
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="5dp">
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="76dp"
+                android:fadingEdge="horizontal"
+                android:requiresFadingEdge="horizontal"
+                android:scrollbars="none">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/trafficincidentstoggle"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:fabSize="normal" />
-            </RelativeLayout>
+                    android:layout_alignParentLeft="true"
+                    app:singleLine="true"/>
 
-        </LinearLayout>
+            </HorizontalScrollView>
+
+        </RelativeLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </RelativeLayout>

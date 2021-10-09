@@ -1,28 +1,21 @@
 package com.example.cz2006.ui.meet;
 
-import android.app.ActionBar;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.CompoundButton;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-
-import com.example.cz2006.MainActivity;
 import com.example.cz2006.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,19 +25,22 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.slider.Slider;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
-public class MeetFragment extends Fragment {
+public class MeetFragment extends Fragment implements View.OnClickListener {
     private GoogleMap mMap;
     private ArrayList<Marker> trafficincidentsmarkers = new ArrayList<>();
 
     private View rootView;
-
-    //Bottom Sheet
-    private BottomSheetBehavior mBottomSheetBehavior;
-    private LinearLayout mBottomSheet;
+    private ChipGroup chipGroup;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -78,10 +74,22 @@ public class MeetFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_maps, container, false);
 
         // Bottom Sheet
-        mBottomSheet = rootView.findViewById(R.id.bottom_sheet);
-        mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
+        LinearLayout mBottomSheet = rootView.findViewById(R.id.bottom_sheet);
+        //Bottom Sheet
+        BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
 
+        // Expanded by default
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        // Postal Code bubble
+        chipGroup = rootView.findViewById(R.id.chipGroup);
+
+        // Initialise Add/Go Button
+        MaterialButton addBtn = rootView.findViewById(R.id.addBtn);
+        addBtn.setOnClickListener(this);
+
+        MaterialButton goBtn = rootView.findViewById(R.id.goBtn);
+        goBtn.setOnClickListener(this);
 
         return rootView;
     }
@@ -129,5 +137,93 @@ public class MeetFragment extends Fragment {
 
             }
         });
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case  R.id.addBtn: {
+                // do something for add Button
+                retrieveInputs();
+                break;
+            }
+
+            case R.id.goBtn: {
+                // Do something for go Button
+                Toast.makeText(getContext(), "Go", Toast.LENGTH_SHORT).show();
+                retrieveInputs();
+
+                // Send info to another view
+                // Go to another view
+
+                break;
+            }
+
+            //.... etc
+        }
+    }
+
+
+    private void retrieveInputs() {
+        TextInputEditText postalTextLayout = rootView.findViewById(R.id.postalCodeInput);
+        MaterialButtonToggleGroup transportBtns = rootView.findViewById(R.id.transport_group);
+        Slider timeSlider = rootView.findViewById(R.id.timeSlider);
+
+        // Check which transport button pressed
+        int buttonId = transportBtns.getCheckedButtonId();
+        MaterialButton button = transportBtns.findViewById(buttonId);
+        String trans_selected = "car";
+
+        // Scan text input from postal code input
+        String postalText = postalTextLayout.getText().toString();
+
+        // Scan slider input
+        int time_selected = (int) timeSlider.getValue();
+
+        // Check which button id is match to which
+        if(button.getId() == R.id.trainOption){
+            trans_selected = "train";
+        } else if(button.getId()  == R.id.busOption) {
+            trans_selected = "bus";
+        } else if(button.getId()  == R.id.carOption) {
+            trans_selected = "car";
+        }
+
+        // Postal Code must be in 6 numerical digits
+        if(postalText.length() == 6 && postalText.matches("[0-9]+")){
+            Toast.makeText(getContext(), "Add", Toast.LENGTH_SHORT).show();
+
+            addNewChip(postalText, chipGroup, trans_selected);
+
+            // save info to memory
+            saveChipsToMem(postalText, trans_selected, time_selected);
+        } else {
+            Toast.makeText(getContext(), "Please enter a numerical 6 digits postal code", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void addNewChip(String text, ChipGroup chipGroup, String type) {
+        Chip chip = (Chip) getLayoutInflater().inflate(R.layout.postal_code, chipGroup, false);
+        Drawable trans_type = getResources().getDrawable(R.drawable.ic_baseline_directions_car);
+        switch(type) {
+            case "train":
+                trans_type = getResources().getDrawable(R.drawable.ic_baseline_train_24);
+                break;
+            case "bus":
+                trans_type = getResources().getDrawable(R.drawable.ic_baseline_directions_bus_24);
+                break;
+        }
+        chip.setChipIcon(trans_type);
+        chip.setText(text);
+        chipGroup.addView(chip, chipGroup.getChildCount() );
+        chip.setOnCloseIconClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chipGroup.removeView(chip);
+            }
+        });
+    }
+
+    private void saveChipsToMem(String postal, String trans, int time) {
+        // Store Data to Array? Singleton?
     }
 }
