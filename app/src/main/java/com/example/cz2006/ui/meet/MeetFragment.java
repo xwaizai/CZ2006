@@ -181,7 +181,7 @@ public class MeetFragment extends Fragment implements View.OnClickListener {
             //.... etc
         }
     }
-    private boolean checkValid(String postalText)
+    private boolean checkValid(String postalText) //check whether the postal code is valid using geocode
     {
         try {
 
@@ -216,7 +216,7 @@ public class MeetFragment extends Fragment implements View.OnClickListener {
                     JSONObject r1 = result.getJSONObject(0);
                     JSONObject geometry = r1.getJSONObject("geometry");
                     JSONObject location = geometry.getJSONObject("location");
-                    this.lat.add(  location.getString("lat"));
+                    this.lat.add(  location.getString("lat"));  //get the postal code lat and lng for future use to calculate the midpoint to meet
                     this.lng.add(  location.getString("lng"));
                     Log.d( "In: ","IN");
                     return true;
@@ -295,22 +295,22 @@ public class MeetFragment extends Fragment implements View.OnClickListener {
         chip.setOnCloseIconClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String removedpostal = (String) chip.getText();
+                String removedpostal = (String) chip.getText(); //get the postal code being removed
                 int i;
                 for(i=0; i<postcode.size(); i++)
                 {
-                    if(postcode.get(i).equals(removedpostal))
+                    if(postcode.get(i).equals(removedpostal)) //find the index of the postalcode removed
                     {
                         break;
                     }
                 }
-                postcode.remove(i);
+                postcode.remove(i); //remove the postal code from all the arrays
                 travelType.remove(i);
                 lat.remove(i);
                 lng.remove(i);
                 travelTime.remove(i);
 
-                String show="";
+                /*String show="";
                 int j;
                 for(j=0; j<postcode.size(); j++)
                 {
@@ -318,13 +318,14 @@ public class MeetFragment extends Fragment implements View.OnClickListener {
                     lat.get(j)+ "," + lng.get(j) + "," + travelTime.get(j));
 
                 }
+                */
 
                 chipGroup.removeView(chip);
             }
         });
     }
 
-    private void saveChipsToMem(String postal, String trans, int time) {
+    private void saveChipsToMem(String postal, String trans, int time) {  //to store the necessary information in the respective array for future calculation
         // Store Data to Array? Singleton?
         this.postcode.add(postal);
         this.travelType.add(trans);
