@@ -28,5 +28,5 @@
 
     <!--Strings for bottom sheet-->
     <string name="postal_code">Postal Code</string>
-    <string name="search_places">Search Places</string>
+    <string name="search_places">Where to?</string>
 </resources>

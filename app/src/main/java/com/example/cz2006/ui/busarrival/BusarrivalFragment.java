@@ -58,7 +58,7 @@ public class BusarrivalFragment extends Fragment {
     private View root;
     private SwipeRefreshLayout refreshView;
 
-    private RecyclerViewAdapter adapter;
+    private BusRecyclerViewAdapter adapter;
 
     private BusArrival busArrival;
 
@@ -314,7 +314,7 @@ public class BusarrivalFragment extends Fragment {
 
     private void initRecyclerView(){
         RecyclerView recycleView = root.findViewById(R.id.busRecyclerView);
-        adapter = new RecyclerViewAdapter(
+        adapter = new BusRecyclerViewAdapter(
                 mServiceNo, mBusStopFirst, mBusStopSecond, mBusStopThird,
                 mTypeOfBusFirst, mTypeOfBusSecond, mTypeOfBusThird,
                 mFeatureFirst, mFeatureSecond, mFeatureThird,

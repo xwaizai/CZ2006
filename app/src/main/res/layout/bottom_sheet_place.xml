@@ -4,13 +4,8 @@
     android:id="@+id/bottom_sheet_place"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
     android:background="@drawable/rounded_top_corners"
-    android:orientation="vertical"
-    android:padding="15dp"
-    android:elevation="5dp"
-    app:behavior_peekHeight="30dp"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/placesLayout"
@@ -27,13 +22,19 @@
             android:id="@+id/placesInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:maxLines="1"
             android:imeOptions="actionDone"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <!--TODO: RecyclerView thingy here-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/placeRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        app:layoutManager="LinearLayoutManager"
+        android:scrollbars="vertical"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,13 +52,13 @@
             app:cornerRadius="15dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/selectBtn"
+            android:id="@+id/nextBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginLeft="25dp"
             android:backgroundTint="@color/lime_green"
-            android:text="Select"
+            android:text="Next"
             android:textColor="@color/black"
             app:cornerRadius="15dp" />
 

@@ -32,7 +32,6 @@
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/menu/main.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/menu/search.xml" value="0.25" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3828125" />
-        <entry key="..\:/Users/Owner/StudioProjects/CZ2006/app/src/main/res/layout/fragment_maps.xml" value="0.33177083333333335" />
         <entry key="app/src/main/res/drawable-v21/ic_menu_camera.xml" value="0.20277777777777778" />
         <entry key="app/src/main/res/drawable-v21/ic_menu_gallery.xml" value="0.20277777777777778" />
         <entry key="app/src/main/res/drawable-v21/ic_menu_slideshow.xml" value="0.20277777777777778" />
@@ -59,10 +58,14 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.22864583333333333" />
         <entry key="app/src/main/res/layout/bottom_sheet.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/bottom_sheet_place.xml" value="0.221875" />
+        <entry key="app/src/main/res/layout/bottom_sheet_container.xml" value="0.24947916666666667" />
+        <entry key="app/src/main/res/layout/bottom_sheet_place.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/bottom_sheet_postal.xml" value="0.39010416666666664" />
+        <entry key="app/src/main/res/layout/bottomfragment_postal.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/covid_infobox.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.2296875" />
+        <entry key="app/src/main/res/layout/fragment_bottom__place.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_bus_results.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/fragment_busarrival.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/fragment_car_nav_ui.xml" value="0.221875" />
@@ -70,12 +73,13 @@
         <entry key="app/src/main/res/layout/fragment_details.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/fragment_guide.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/fragment_lines.xml" value="0.221875" />
-        <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_meet.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_spaceout.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/layout/fragment_train.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/layout/hamburger.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/layout/layout_buslistitem.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_placelistitem.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.3802083333333333" />
         <entry key="app/src/main/res/layout/postal_code.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.335" />

@@ -1,12 +1,10 @@
 package com.example.cz2006.ui.busarrival;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,9 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cz2006.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
+public class BusRecyclerViewAdapter extends RecyclerView.Adapter<BusRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "RecyclerViewAdapter";
 
     private ArrayList<String> mServiceNo = new ArrayList<>();
@@ -41,14 +38,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     
     private BusarrivalFragment mContext;
 
-    public RecyclerViewAdapter(ArrayList<String> ServiceNo, ArrayList<String> BusStopFirst,
-                               ArrayList<String> BusStopSecond, ArrayList<String> BusStopThird,
-                               ArrayList<String> TypeOfBusFirst, ArrayList<String> TypeOfBusSecond,
-                               ArrayList<String> TypeOfBusThird, ArrayList<Boolean> FeatureFirst,
-                               ArrayList<Boolean> FeatureSecond, ArrayList<Boolean> FeatureThird,
-                               ArrayList<String> LoadFirst, ArrayList<String> LoadSecond,
-                               ArrayList<String> LoadThird,
-                               BusarrivalFragment Context) {
+    public BusRecyclerViewAdapter(ArrayList<String> ServiceNo, ArrayList<String> BusStopFirst,
+                                  ArrayList<String> BusStopSecond, ArrayList<String> BusStopThird,
+                                  ArrayList<String> TypeOfBusFirst, ArrayList<String> TypeOfBusSecond,
+                                  ArrayList<String> TypeOfBusThird, ArrayList<Boolean> FeatureFirst,
+                                  ArrayList<Boolean> FeatureSecond, ArrayList<Boolean> FeatureThird,
+                                  ArrayList<String> LoadFirst, ArrayList<String> LoadSecond,
+                                  ArrayList<String> LoadThird,
+                                  BusarrivalFragment Context) {
         mServiceNo = ServiceNo;
 
         mBusStopFirst = BusStopFirst;
