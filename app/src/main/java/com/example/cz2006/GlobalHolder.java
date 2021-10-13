@@ -17,7 +17,7 @@ public class GlobalHolder {
     private GlobalHolder()
     {
         // for debugging purpose and initialize the values!
-        m_Start = new PlaceInfo("Pfizer", 1.299756,103.636375,"31 Tuas South Ave 6, Singapore 637578");
+        m_Start = new PlaceInfo("my home", 1.4354,103.7962,"Woodlands Ave 4, Singapore 730610");
         m_Destination = new PlaceInfo("NSL OilChem Group of companies",1.306276,103.6998653,"23 Tanjong Kling Rd, Singapore 628049");
     }
 

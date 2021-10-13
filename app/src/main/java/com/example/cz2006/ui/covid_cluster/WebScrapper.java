@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class WebScrapper {
     // to connect to the latest URL of MOH website
-    private String m_URL = "https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(18-sep-2021)";
+    private String m_URL = "https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(12-oct-2021)";
     private List<PlaceInfo> m_ListOfClusterDetails = new ArrayList<>();
 
     private Document m_MyDoc;

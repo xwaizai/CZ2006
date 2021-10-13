@@ -45,7 +45,7 @@ public class CarUI extends BottomSheetDialogFragment implements View.OnClickList
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_car_nav_ui, container, false);
+        return inflater.inflate(R.layout.bottom_sheet_car, container, false);
     }
 
     @Override

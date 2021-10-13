@@ -32,6 +32,26 @@
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/menu/main.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/menu/search.xml" value="0.25" />
         <entry key="..\:/Android_Studio_Projects/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3828125" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/drawable/drawer_round.xml" value="0.5166666666666667" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.5166666666666667" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/drawable/ic_baseline_dehaze_24.xml" value="0.5166666666666667" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/drawable/ic_baseline_directions_bus_24.xml" value="0.5166666666666667" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/drawable/ic_baseline_directions_car.xml" value="0.5166666666666667" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/drawable/layout_round_bg.xml" value="0.5166666666666667" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/activity_main.xml" value="0.27239583333333334" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/app_bar_main.xml" value="0.27239583333333334" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/bottom_sheet_container.xml" value="0.27239583333333334" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/bottom_sheet_place.xml" value="0.27239583333333334" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/bottom_sheet_postal.xml" value="0.27239583333333334" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/content_main.xml" value="0.27239583333333334" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/fragment_car_nav_ui.xml" value="0.3582427536231884" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/fragment_spaceout.xml" value="0.4841485507246377" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/fragment_train.xml" value="0.4841485507246377" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/layout_buslistitem.xml" value="0.4841485507246377" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/layout/postal_code.xml" value="0.27239583333333334" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/menu/activity_main_drawer.xml" value="0.27239583333333334" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/menu/main.xml" value="0.27239583333333334" />
+        <entry key="..\:/cz2006_proj/app/src/main/res/menu/search.xml" value="0.27239583333333334" />
         <entry key="app/src/main/res/drawable-v21/ic_menu_camera.xml" value="0.20277777777777778" />
         <entry key="app/src/main/res/drawable-v21/ic_menu_gallery.xml" value="0.20277777777777778" />
         <entry key="app/src/main/res/drawable-v21/ic_menu_slideshow.xml" value="0.20277777777777778" />

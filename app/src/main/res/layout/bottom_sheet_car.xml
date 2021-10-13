@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet_car"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="left"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/layout_round_bg"
-    >
-
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_top_corners"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/car_time"
@@ -16,8 +14,9 @@
         android:text="21 min"
         android:textAlignment="textStart"
         android:textColor="@color/dark_green"
-        android:paddingLeft="10dp"
-        android:textSize="25dp" />
+        android:textSize="25dp"
+        android:layout_marginLeft="10dp"
+        />
 
     <TextView
         android:id="@+id/car_dist"
@@ -58,5 +57,4 @@
         android:textColor="@color/white"
         android:backgroundTint="@color/blue"
         />
-
-</RelativeLayout>
+</LinearLayout>
