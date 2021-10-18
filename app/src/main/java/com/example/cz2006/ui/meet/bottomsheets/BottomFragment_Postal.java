@@ -203,9 +203,14 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             //Toast.makeText(getContext(), "Added", Toast.LENGTH_SHORT).show();
 
             addNewChip(postalText, chipGroup, trans_selected);
-            Log.d( "postalinfo ",lat.get(lat.size()-1));
+
             // save info to memory
             saveChipsToMem(postalText, trans_selected, time_selected);
+            Log.d( "postalinfo ",lat.get(lat.size()-1));
+            Log.d( "postalinfo ",lng.get(lat.size()-1));
+            Log.d( "postalinfo ",postcode.get(lat.size()-1));
+            Log.d( "postalinfo ",Integer.toString(travelTime.get(lat.size()-1)));
+            Log.d( "postalinfo ",travelType.get(lat.size()-1));
         } else {
             Toast.makeText(getContext(), "Please enter a valid postal code!", Toast.LENGTH_SHORT).show();
         }
