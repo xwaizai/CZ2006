@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.cz2006.R;
+import com.example.cz2006.ui.meet.MeetMGR;
 import com.example.cz2006.ui.meet.TrafficIncidents;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -54,6 +55,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
 
     private View postalView;
     private ChipGroup chipGroup;
+    MeetMGR meetMGR = new MeetMGR();
 
     @Nullable
     @Override
@@ -113,7 +115,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
     }
 
     //check whether the postal code is valid using geocode
-    private boolean checkValid(String postalText)
+    /*private boolean checkValid(String postalText)
     {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -167,7 +169,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             Log.d( "Error: ",e.getMessage());
             return false;
         }
-    }
+    }*/
 
 
     private void retrieveInputs() {
@@ -196,17 +198,18 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
         }
 
         // Make sure the postal code is 6 digit
-        if(postalText.length() == 6 && checkValid(postalText))
+        if(postalText.length() == 6 && meetMGR.checkValidPostal(postalText,this.lat,this.lng))
         {
             //Toast.makeText(getContext(), "Added", Toast.LENGTH_SHORT).show();
 
             addNewChip(postalText, chipGroup, trans_selected);
-
+            Log.d( "postalinfo ",lat.get(lat.size()-1));
             // save info to memory
             saveChipsToMem(postalText, trans_selected, time_selected);
         } else {
             Toast.makeText(getContext(), "Please enter a valid postal code!", Toast.LENGTH_SHORT).show();
         }
+
     }
 
 
