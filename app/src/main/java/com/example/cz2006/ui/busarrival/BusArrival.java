@@ -34,13 +34,14 @@ public class BusArrival {
     private String[] Load2;
     private String[] Load3;
 
-    public BusArrival(){
+    /*public BusArrival(){
         try{
             MyGETRequest(27469);
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
+    }*/
+
     public BusArrival(int query){
         try{
             MyGETRequest(query);
@@ -102,7 +103,6 @@ public class BusArrival {
     
 
     private String MyGETRequest(int buscode) throws IOException, JSONException
-
     {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -184,6 +184,7 @@ public class BusArrival {
         }
         return response.toString();
     }
+
     public void selectionSort (Comparable[] list)
     {
         int min;

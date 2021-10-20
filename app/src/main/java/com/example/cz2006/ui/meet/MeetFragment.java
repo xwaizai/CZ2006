@@ -1,6 +1,7 @@
 package com.example.cz2006.ui.meet;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 public class MeetFragment extends Fragment {
     private GoogleMap mMap;
     private ArrayList<Marker> trafficincidentsmarkers = new ArrayList<>();
+    private View rootView;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -60,7 +62,7 @@ public class MeetFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_maps, container, false);
+        rootView = inflater.inflate(R.layout.fragment_maps, container, false);
 
         // Bottom Sheet
         LinearLayout mBottomSheet = rootView.findViewById(R.id.bottom_sheet);

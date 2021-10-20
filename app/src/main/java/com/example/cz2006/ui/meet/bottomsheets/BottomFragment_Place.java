@@ -115,9 +115,10 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
                 ChipGroup chipGroup = placeView.getRootView().findViewById(R.id.chipGroup);
                 chipGroup.setVisibility(View.VISIBLE);
                 getParentFragmentManager().popBackStackImmediate();
-
                 break;
             case R.id.nextBtn:
+
+                //Add navigation to next
                 break;
 
         }
