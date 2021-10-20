@@ -1,6 +1,7 @@
 package com.example.cz2006.ui.meet.bottomsheets;
 
 import android.graphics.drawable.Drawable;
+import android.location.Address;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.cz2006.GlobalHolder;
+import com.example.cz2006.MainActivity;
 import com.example.cz2006.R;
 import com.example.cz2006.ui.meet.MeetMGR;
 import com.example.cz2006.ui.meet.TrafficIncidents;
@@ -53,9 +56,12 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
     private ArrayList<String> lng= new ArrayList<>();
     private ArrayList<Integer> travelTime = new ArrayList<>();
 
+    float r;
+
     private View postalView;
     private ChipGroup chipGroup;
     MeetMGR meetMGR = new MeetMGR();
+    private GeofenceHelper geofenceHelper;
 
     @Nullable
     @Override
@@ -72,6 +78,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
         MaterialButton goBtn = postalView.findViewById(R.id.goBtn);
         goBtn.setOnClickListener(this);
 
+        geofenceHelper = new GeofenceHelper(getContext());
         return postalView;
     }
 
@@ -114,6 +121,64 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
         }
     }
 
+    //check whether the postal code is valid using geocode
+    /*private boolean checkValid(String postalText)
+    {
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            String api = getResources().getString(R.string.google_maps_key);
+
+            URL urlForGetRequest = new URL(
+                    "https://maps.googleapis.com/maps/api/geocode/json?address="
+                            + postalText +",+SG&key=" + api);
+
+            String readLine = null;
+            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
+            conection.setRequestMethod("GET");
+
+            int responseCode = conection.getResponseCode();
+
+            StringBuffer response = new StringBuffer();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                Log.d( "In: ","IN1");
+
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(conection.getInputStream()));
+                while ((readLine = in.readLine()) != null) {
+                    response.append(readLine);
+                }
+                in.close();
+                // print result
+                JSONObject jObject = new JSONObject(response.toString());
+
+                Log.d( "jObject String: ", jObject.getString("status"));
+
+                if (jObject.getString("status").equals("OK"))
+                {
+                    JSONArray result = (JSONArray) new JSONTokener(jObject.getString("results")).nextValue();
+                    JSONObject r1 = result.getJSONObject(0);
+                    JSONObject geometry = r1.getJSONObject("geometry");
+                    JSONObject location = geometry.getJSONObject("location");
+
+                    //get the postal code lat and lng for future use to calculate the midpoint to meet
+                    this.lat.add(  location.getString("lat"));
+                    this.lng.add(  location.getString("lng"));
+                    Log.d( "In: ","IN2");
+                    return true;
+                }
+
+            }
+            return false;
+        } catch(Exception e) {
+            Log.d( "Error: ",e.getMessage());
+            return false;
+        }
+    }*/
+
+
     private void retrieveInputs() {
         TextInputEditText postalTextLayout = postalView.findViewById(R.id.postalCodeInput);
         MaterialButtonToggleGroup transportBtns = postalView.findViewById(R.id.transport_group);
@@ -133,10 +198,14 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
         // Check which button id is match to which
         if (button.getId() == R.id.trainOption) {
             trans_selected = "train";
+            r = time_selected*300;
         } else if (button.getId() == R.id.busOption) {
             trans_selected = "bus";
+            r = (float) (time_selected*225);
         } else if (button.getId() == R.id.carOption) {
             trans_selected = "car";
+            //r = trap0 velTime.get(lat.size()-1)*40;
+            r = time_selected*600;
         }
 
         // Make sure the postal code is 6 digit
@@ -153,12 +222,12 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             Log.d( "postalinfo ",postcode.get(lat.size()-1));
             Log.d( "postalinfo ",Integer.toString(travelTime.get(lat.size()-1)));
             Log.d( "postalinfo ",travelType.get(lat.size()-1));
+
+            geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))),Double.parseDouble(String.valueOf(lng.get(lng.size()-1))),r);
         } else {
             Toast.makeText(getContext(), "Please enter a valid postal code!", Toast.LENGTH_SHORT).show();
         }
-
     }
-
 
     private void addNewChip(String text, ChipGroup chipGroup, String type) {
         Chip chip = (Chip) getLayoutInflater().inflate(R.layout.postal_code, chipGroup, false);
@@ -194,10 +263,21 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
                         lat.remove(i);
                         lng.remove(i);
                         travelTime.remove(i);
+                        GlobalHolder.getInstance().m_GMap.clear();
                         break;
                     }
                 }
+                for(i=0; i<postcode.size(); i++){
 
+                    if (travelType.get(i).equals("car")) {
+                        r = travelTime.get(i)*600; //1250m/
+                    } else if (travelType.get(i).equals("train")) {
+                        r = travelTime.get(i)*300;
+                    } else if (travelType.get(i).equals("bus")) {
+                        r = (float) (travelTime.get(i)*225);
+                    }
+                    geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(i))), Double.parseDouble(String.valueOf(lng.get(i))), r);
+                }
                 chipGroup.removeView(chip);
             }
         });
