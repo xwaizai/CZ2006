@@ -62,6 +62,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
     private ChipGroup chipGroup;
     MeetMGR meetMGR = new MeetMGR();
     private GeofenceHelper geofenceHelper;
+    Data Db = new Data();
 
     @Nullable
     @Override
