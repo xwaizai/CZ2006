@@ -25,7 +25,7 @@ public class MeetMGR {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            String api = "AIzaSyDbPQ0ByGoYskLBVO0EvmEV_t1gGYNeZvw";
+            String api = ""; //INSERT API with geocode&places
 
             URL urlForGetRequest = new URL(
                     "https://maps.googleapis.com/maps/api/geocode/json?address="
@@ -76,3 +76,55 @@ public class MeetMGR {
         }
     }
 }
+
+
+/*
+{
+        "results" : [
+        {
+        "address_components" : [
+        {
+        "long_name" : "640202",
+        "short_name" : "640202",
+        "types" : [ "postal_code" ]
+        },
+        {
+        "long_name" : "Jurong West",
+        "short_name" : "Jurong West",
+        "types" : [ "neighborhood", "political" ]
+        },
+        {
+        "long_name" : "Singapore",
+        "short_name" : "Singapore",
+        "types" : [ "locality", "political" ]
+        },
+        {
+        "long_name" : "Singapore",
+        "short_name" : "SG",
+        "types" : [ "country", "political" ]
+        }
+        ],
+        "formatted_address" : "Singapore 640202",
+        "geometry" : {
+        "location" : {
+        "lat" : 1.34369,
+        "lng" : 103.714978
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+        "northeast" : {
+        "lat" : 1.3548449,
+        "lng" : 103.7309854
+        },
+        "southwest" : {
+        "lat" : 1.3325351,
+        "lng" : 103.6989706
+        }
+        }
+        },
+        "place_id" : "ChIJT9aZV-gP2jERA2rtX0OPYJk",
+        "types" : [ "postal_code" ]
+        }
+        ],
+        "status" : "OK"
+        } */
