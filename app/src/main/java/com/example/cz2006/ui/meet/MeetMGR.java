@@ -1,9 +1,15 @@
 package com.example.cz2006.ui.meet;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.StrictMode;
 import android.util.Log;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.cz2006.R;
+import com.example.cz2006.ui.meet.bottomsheets.BottomFragment_Postal;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,16 +23,18 @@ import java.util.List;
 
 public class MeetMGR {
 
-    public MeetMGR(){
+    private BottomFragment_Postal context;
 
+    public MeetMGR(BottomFragment_Postal context){
+        this.context = context;
     }
     public boolean checkValidPostal(String postalText , List<String> lat, List<String> lng)
     {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            String api = ""; //INSERT API with geocode&places
-
+            String api = context.getResources().getString(R.string.google_maps_key); //INSERT API with geocode&places
+            //Log.d("checkValidAPI: ", api);
             URL urlForGetRequest = new URL(
                     "https://maps.googleapis.com/maps/api/geocode/json?address="
                             + postalText +",+SG&key=" + api);

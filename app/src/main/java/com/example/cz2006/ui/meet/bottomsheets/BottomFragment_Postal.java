@@ -60,7 +60,6 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
 
     private View postalView;
     private ChipGroup chipGroup;
-    MeetMGR meetMGR = new MeetMGR();
     private GeofenceHelper geofenceHelper;
 
     @Nullable
@@ -183,6 +182,8 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
         TextInputEditText postalTextLayout = postalView.findViewById(R.id.postalCodeInput);
         MaterialButtonToggleGroup transportBtns = postalView.findViewById(R.id.transport_group);
         Slider timeSlider = postalView.findViewById(R.id.timeSlider);
+
+        MeetMGR meetMGR = new MeetMGR(this);
 
         // Check which transport button pressed
         int buttonId = transportBtns.getCheckedButtonId();
