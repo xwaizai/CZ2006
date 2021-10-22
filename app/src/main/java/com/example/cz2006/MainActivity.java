@@ -1,44 +1,25 @@
 package com.example.cz2006;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 
 import com.example.cz2006.ui.busarrival.BusarrivalFragment;
 import com.example.cz2006.ui.guide.GuideFragment;
 import com.example.cz2006.ui.meet.MeetFragment;
-import com.example.cz2006.ui.meet.bottomsheets.BottomFragment_Place;
-import com.example.cz2006.ui.meet.bottomsheets.BottomFragment_Postal;
-import com.example.cz2006.ui.spaceout.SpaceoutFragment;
+import com.example.cz2006.ui.covidsitrep.CovidSitRepFragment;
 import com.example.cz2006.ui.trainservice.TrainServiceFragment;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.cz2006.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -107,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 viewIsAtHome = true;
                 break;
             case R.id.nav_spaceout:
-                fragment = new SpaceoutFragment();
+                fragment = new CovidSitRepFragment();
                 title = getString(R.string.menu_spaceout);
                 tagName = "SpaceOut_Tag";
                 viewIsAtHome = false;

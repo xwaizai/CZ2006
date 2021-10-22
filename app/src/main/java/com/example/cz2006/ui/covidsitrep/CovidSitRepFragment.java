@@ -1,35 +1,31 @@
-package com.example.cz2006.ui.spaceout;
+package com.example.cz2006.ui.covidsitrep;
 
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 
 import com.example.cz2006.R;
-import com.example.cz2006.databinding.FragmentSpaceoutBinding;
+import com.example.cz2006.databinding.FragmentCovidsitrepBinding;
 
-public class SpaceoutFragment extends Fragment {
+public class CovidSitRepFragment extends Fragment {
 
-    private SpaceoutViewModel spaceoutViewModel;
-    private FragmentSpaceoutBinding binding;
+    private CovidSitRepViewModel spaceoutViewModel;
+    private FragmentCovidsitrepBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         spaceoutViewModel =
-                new ViewModelProvider(this).get(SpaceoutViewModel.class);
+                new ViewModelProvider(this).get(CovidSitRepViewModel.class);
 
-        binding = FragmentSpaceoutBinding.inflate(inflater, container, false);
+        binding = FragmentCovidsitrepBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/nav_spaceout"
-        android:name="com.example.cz2006.ui.spaceout.SpaceoutFragment"
+        android:name="com.example.cz2006.ui.covidsitrep.CovidSitRepFragment"
         android:label="@string/menu_spaceout"
-        tools:layout="@layout/fragment_spaceout" />
+        tools:layout="@layout/fragment_covidsitrep" />
 
     <fragment
         android:id="@+id/nav_busarrival"
