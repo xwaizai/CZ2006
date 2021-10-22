@@ -194,38 +194,39 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
         // Scan text input from postal code input
         String postalText = postalTextLayout.getText().toString();
 
-        // Scan slider input
-        int time_selected = (int) timeSlider.getValue();
-
-        // Check which button id is match to which
-        if (button.getId() == R.id.trainOption) {
-            trans_selected = "train";
-            r = time_selected*300;
-        } else if (button.getId() == R.id.busOption) {
-            trans_selected = "bus";
-            r = (float) (time_selected*225);
-        } else if (button.getId() == R.id.carOption) {
-            trans_selected = "car";
-            //r = trap0 velTime.get(lat.size()-1)*40;
-            r = time_selected*600;
-        }
-
         // Make sure the postal code is 6 digit
-        if(postalText.length() == 6 && meetMGR.checkValidPostal(postalText,this.lat,this.lng))
-        {
-            //Toast.makeText(getContext(), "Added", Toast.LENGTH_SHORT).show();
+        if(postalText.length() == 6 && meetMGR.checkValidPostal(postalText,this.lat,this.lng)) {
+            // Scan slider input
+            int time_selected = (int) timeSlider.getValue();
+            if(time_selected!=0){
+                // Check which button id is match to which
+                if (button.getId() == R.id.trainOption) {
+                    trans_selected = "train";
+                    r = time_selected * 300;
+                } else if (button.getId() == R.id.busOption) {
+                    trans_selected = "bus";
+                    r = (float) (time_selected * 225);
+                } else if (button.getId() == R.id.carOption) {
+                    trans_selected = "car";
+                    //r = trap0 velTime.get(lat.size()-1)*40;
+                    r = time_selected * 600;
+                }
+                //Toast.makeText(getContext(), "Added", Toast.LENGTH_SHORT).show();
 
-            addNewChip(postalText, chipGroup, trans_selected);
+                addNewChip(postalText, chipGroup, trans_selected);
 
-            // save info to memory
-            saveChipsToMem(postalText, trans_selected, time_selected);
-            Log.d( "postalinfo ",lat.get(lat.size()-1));
-            Log.d( "postalinfo ",lng.get(lat.size()-1));
-            Log.d( "postalinfo ",postcode.get(lat.size()-1));
-            Log.d( "postalinfo ",Integer.toString(travelTime.get(lat.size()-1)));
-            Log.d( "postalinfo ",travelType.get(lat.size()-1));
+                // save info to memory
+                saveChipsToMem(postalText, trans_selected, time_selected);
+                Log.d("postalinfo ", lat.get(lat.size() - 1));
+                Log.d("postalinfo ", lng.get(lat.size() - 1));
+                Log.d("postalinfo ", postcode.get(lat.size() - 1));
+                Log.d("postalinfo ", Integer.toString(travelTime.get(lat.size() - 1)));
+                Log.d("postalinfo ", travelType.get(lat.size() - 1));
 
-            geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))),Double.parseDouble(String.valueOf(lng.get(lng.size()-1))),r);
+                geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(lat.size() - 1))), Double.parseDouble(String.valueOf(lng.get(lng.size() - 1))), r);
+            } else {
+                Toast.makeText(getContext(), "Please enter a non zero time input!", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toast.makeText(getContext(), "Please enter a valid postal code!", Toast.LENGTH_SHORT).show();
         }
