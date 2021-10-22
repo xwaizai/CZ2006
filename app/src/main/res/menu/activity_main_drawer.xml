@@ -11,7 +11,7 @@
         <item
             android:id="@+id/nav_spaceout"
             android:icon="@drawable/ic_baseline_people_24"
-            android:title="@string/menu_spaceout" />
+            android:title="@string/menu_covidsitrep" />
         <item
             android:id="@+id/nav_busarrival"
             android:icon="@drawable/ic_baseline_directions_bus_24"

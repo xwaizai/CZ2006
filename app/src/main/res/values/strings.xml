@@ -9,6 +9,7 @@
 
     <string name="menu_meet">Meet</string>
     <string name="menu_spaceout">Space Out</string>
+    <string name="menu_covidsitrep">Covid Sit Rep</string>
     <string name="menu_busarrival">Bus Arrival</string>
     <string name="menu_trainservice">Train Service Alerts</string>
     <string name="menu_guide">Guide</string>
@@ -29,4 +30,5 @@
     <!--Strings for bottom sheet-->
     <string name="postal_code">Postal Code</string>
     <string name="search_places">Where to?</string>
+
 </resources>
