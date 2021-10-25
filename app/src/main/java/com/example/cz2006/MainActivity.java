@@ -89,8 +89,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_spaceout:
                 fragment = new CovidSitRepFragment();
-                title = getString(R.string.menu_spaceout);
-                tagName = "SpaceOut_Tag";
+                title = getString(R.string.menu_covidsitrep);
+                tagName = "CovidSitRep_Tag";
                 viewIsAtHome = false;
                 break;
             case R.id.nav_busarrival:
