@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 public class GeofenceHelper extends ContextWrapper {
     private static final String TAG = "GeofenceHelper";
+    private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     private GeofencingClient geofencingClient;
 
@@ -93,13 +94,21 @@ public class GeofenceHelper extends ContextWrapper {
         GeofencingRequest geofencingRequest = getGeofencingRequest(geofence);
         PendingIntent pendingIntent = getPendingIntent();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.title_location_permission)
+                        .setMessage(R.string.text_location_permission)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+                            }
+                })
+                .create()
+                .show;
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+            }
             return;
         }
         geofencingClient.addGeofences(geofencingRequest, pendingIntent)
