@@ -2,6 +2,9 @@ package com.example.cz2006.ui.meet.bottomsheets;
 
 import android.graphics.drawable.Drawable;
 import android.location.Address;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -90,11 +93,32 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
 
     }
 
+
     public void onClick(View v) {
         switch (v.getId()) {
             case  R.id.addBtn: {
                 // do something for add Button
                 retrieveInputs();
+                /*
+                for (Location temp : Database) {
+                    String[] inside;
+                    for (Location fence : geofenceList) {
+                        r = fence.getValue();
+                        if (temp.distanceTo(r) < r) {
+                            inside.add(fence);
+                        }
+                    }
+                    if (inside.length >= 2) {
+                        lat = temp.getLatitude();
+                        lng = temp.getLongitude();
+                        LatLng markerTemp = new LatLng(lat, lng);
+                        googleMap.addMarker(new MarkerOptions()
+                                .position(markerTemp)
+                                .title("temporary marker");
+                        )
+                    }
+                }
+                */
                 break;
             }
 
@@ -179,6 +203,8 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
 
 
     private void retrieveInputs() {
+        public List<Pair> geofenceList = new ArrayList<Pair>();
+
         TextInputEditText postalTextLayout = postalView.findViewById(R.id.postalCodeInput);
         MaterialButtonToggleGroup transportBtns = postalView.findViewById(R.id.transport_group);
         Slider timeSlider = postalView.findViewById(R.id.timeSlider);
@@ -224,7 +250,14 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             Log.d( "postalinfo ",Integer.toString(travelTime.get(lat.size()-1)));
             Log.d( "postalinfo ",travelType.get(lat.size()-1));
 
+            // Create a geofence
             geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))),Double.parseDouble(String.valueOf(lng.get(lng.size()-1))),r);
+            // Add to geofence list
+            Location temp = new Location(LocationManger.GPS_PROVIDER);
+            temp.setLatitude(lat);
+            temp.setLongitude(lng);
+            geofenceList.add(temp, r);
+
         } else {
             Toast.makeText(getContext(), "Please enter a valid postal code!", Toast.LENGTH_SHORT).show();
         }

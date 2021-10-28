@@ -34,7 +34,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 public class GeofenceHelper extends ContextWrapper {
     private static final String TAG = "GeofenceHelper";
-    private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    //  private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     private GeofencingClient geofencingClient;
 
@@ -94,21 +94,8 @@ public class GeofenceHelper extends ContextWrapper {
         GeofencingRequest geofencingRequest = getGeofencingRequest(geofence);
         PendingIntent pendingIntent = getPendingIntent();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.title_location_permission)
-                        .setMessage(R.string.text_location_permission)
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
-                            }
-                })
-                .create()
-                .show;
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
-            }
+            /*
+            permissions setting */
             return;
         }
         geofencingClient.addGeofences(geofencingRequest, pendingIntent)
@@ -154,6 +141,11 @@ public class GeofenceHelper extends ContextWrapper {
         }
         return e.getLocalizedMessage();
     }
-
+/*
+    public boolean checkIfInsideGeofence(Location, Geofence) {
+        // TODO check if a location is inside a geofence
+        Location.distanceTo()
+        return;
+    } */
 
 }

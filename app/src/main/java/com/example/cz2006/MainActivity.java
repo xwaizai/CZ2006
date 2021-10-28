@@ -159,4 +159,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             moveTaskToBack(true);  //If view is in Meet fragment, exit application
         }
     }
+
+    private PendingIntent getGeofencePendingIntent() {
+        // Reuse pending intent if it already exists
+        if (geofencePendingIntent != null) {
+            return geofencePendingIntent;
+        }
+        Intent intent = new Intent(this, GeofenceBroadcastReceiver.class);
+        geofencePendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return geofencePendingIntent;
+    }
 }

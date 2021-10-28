@@ -7,3 +7,4 @@ public class Data {
     private ArrayList<String> Database = new ArrayList<>();
 
 }
+// Store data as location?
