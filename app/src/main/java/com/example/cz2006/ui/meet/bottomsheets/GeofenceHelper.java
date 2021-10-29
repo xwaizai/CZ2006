@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 public class GeofenceHelper extends ContextWrapper {
     private static final String TAG = "GeofenceHelper";
+    //  private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     private GeofencingClient geofencingClient;
 
@@ -93,13 +94,8 @@ public class GeofenceHelper extends ContextWrapper {
         GeofencingRequest geofencingRequest = getGeofencingRequest(geofence);
         PendingIntent pendingIntent = getPendingIntent();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            /*
+            permissions setting */
             return;
         }
         geofencingClient.addGeofences(geofencingRequest, pendingIntent)
@@ -145,6 +141,11 @@ public class GeofenceHelper extends ContextWrapper {
         }
         return e.getLocalizedMessage();
     }
-
+/*
+    public boolean checkIfInsideGeofence(Location, Geofence) {
+        // TODO check if a location is inside a geofence
+        Location.distanceTo()
+        return;
+    } */
 
 }

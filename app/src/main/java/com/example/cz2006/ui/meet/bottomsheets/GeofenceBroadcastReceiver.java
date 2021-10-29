@@ -28,11 +28,32 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
             return;
         }
 
+        // Get the geofences that were triggered
         List<Geofence> geofenceList = geofencingEvent.getTriggeringGeofences();
+        // Get size of geofence list
+        /*
+        int geofenceListSize = geofenceList.size();
+        if (geofenceListSize > 1 ) {
+            // addmarker
+        }
+
+        String geofenceTransitionDetails = getGeofenceTransitionDetails(
+                this,
+                geofenceTransition,
+                triggeringGeofences
+        );
+        */
         for(Geofence geofence: geofenceList){
             Log.d(TAG,"OnReceive:" +geofence.getRequestId());
         }
         int transitionType = geofencingEvent.getGeofenceTransition();
+
+        /*
+        if (transitionType == Geofence.GEOFENCE_TRANSITION_ENTER && transitionType == Geofence.GEOFENCE_TRANSITION_DWELL) {
+            // add marker
+            return;
+        }
+        */
 
         switch(transitionType){
             case Geofence.GEOFENCE_TRANSITION_ENTER:
