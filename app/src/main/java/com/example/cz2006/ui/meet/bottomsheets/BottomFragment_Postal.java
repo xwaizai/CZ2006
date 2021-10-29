@@ -52,6 +52,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.Math;
+import java.lang.Object;
 
 public class BottomFragment_Postal extends Fragment implements View.OnClickListener {
 
@@ -60,6 +62,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
     private ArrayList<String> lat = new ArrayList<>();
     private ArrayList<String> lng= new ArrayList<>();
     private ArrayList<Integer> travelTime = new ArrayList<>();
+    private List<Pair<Location, Float>> geofenceList = new ArrayList<>();
 
     float r;
 
@@ -101,18 +104,21 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             case  R.id.addBtn: {
                 // do something for add Button
                 retrieveInputs();
+                // change postal code to latlng
+                // create new array list of locations based on Database
+                // loop through new array list
                 /*
                 for (Location temp : Database) {
-                    String[] inside;
+                    ArrayList<Location> inside;
                     for (Location fence : geofenceList) {
-                        r = fence.getValue();
+                        int r = fence.getValue();
                         if (temp.distanceTo(r) < r) {
                             inside.add(fence);
                         }
                     }
-                    if (inside.length >= 2) {
-                        lat = temp.getLatitude();
-                        lng = temp.getLongitude();
+                    if (inside.length == geofenceList.length()) {
+                        double lat = temp.getLatitude();
+                        double lng = temp.getLongitude();
                         LatLng markerTemp = new LatLng(lat, lng);
                         googleMap.addMarker(new MarkerOptions()
                                 .position(markerTemp)
@@ -132,8 +138,17 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
 
                     chipGroup.setVisibility(View.GONE);
                     // Go to next fragment(Search places)
+                    Pair midpoint;
+                    BottomFragment_Place nextFrag = new BottomFragment_Place();
+                    midpoint = findMidpoint(lat, lng);
+                    Bundle bundle = new Bundle();
+                    String latTemp = midpoint.first.toString();
+                    String lngTemp = midpoint.second.toString();
+                    bundle.putString("lat", latTemp);
+                    bundle.putString("lng", lngTemp);
+                    nextFrag.setArguments(bundle);
                     FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.bottom_fragment_container, new BottomFragment_Place());
+                    fragmentTransaction.replace(R.id.bottom_fragment_container, nextFrag);
                     fragmentTransaction.addToBackStack("postal");
                     fragmentTransaction.commit();
                 } else {
@@ -204,8 +219,8 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
     }*/
 
 
+
     private void retrieveInputs() {
-        List<Pair<Location, Float>> geofenceList = new ArrayList<>();
 
         TextInputEditText postalTextLayout = postalView.findViewById(R.id.postalCodeInput);
         MaterialButtonToggleGroup transportBtns = postalView.findViewById(R.id.transport_group);
@@ -255,10 +270,11 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             // Create a geofence
             geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))),Double.parseDouble(String.valueOf(lng.get(lng.size()-1))),r);
             // Add to geofence list
-            Location temp = new Location(LocationManager.GPS_PROVIDER);
+            Location temp = new Location("");
+            /*
             temp.setLatitude(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))));
             temp.setLongitude(Double.parseDouble(String.valueOf(lng.get(lng.size()-1))));
-            //geofenceList.add(Pair());
+            geofenceList.add(Pair(temp, r)); */
 
         } else {
             Toast.makeText(getContext(), "Please enter a valid postal code!", Toast.LENGTH_SHORT).show();
@@ -324,5 +340,28 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
         this.postcode.add(postal);
         this.travelType.add(trans);
         this.travelTime.add(time);
+    }
+
+    // calculate avg of lat and lng return pair of lat and lng
+    private Pair findMidpoint(ArrayList<String> lat, ArrayList<String> lng) {
+        double total = 0;
+        double latAvg, lngAvg = 0;
+        for (String l : lat) {
+            total = total + Double.parseDouble(l);
+        }
+        latAvg = total / lat.size();
+
+        total = 0;
+
+        for (String l : lng) {
+            total = total + Double.parseDouble(l);
+        }
+        lngAvg = total / lng.size();
+
+        String latAvgStr = String.valueOf(latAvg);
+        String lngAvgStr = String.valueOf(lngAvg);
+
+        Pair p = new Pair(latAvgStr, lngAvgStr);
+        return p;
     }
 }
