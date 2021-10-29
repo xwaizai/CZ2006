@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.StrictMode;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BottomFragment_Postal extends Fragment implements View.OnClickListener {
 
@@ -203,7 +205,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
 
 
     private void retrieveInputs() {
-        public List<Pair> geofenceList = new ArrayList<Pair>();
+        List<Pair<Location, Float>> geofenceList = new ArrayList<>();
 
         TextInputEditText postalTextLayout = postalView.findViewById(R.id.postalCodeInput);
         MaterialButtonToggleGroup transportBtns = postalView.findViewById(R.id.transport_group);
@@ -253,10 +255,10 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             // Create a geofence
             geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))),Double.parseDouble(String.valueOf(lng.get(lng.size()-1))),r);
             // Add to geofence list
-            Location temp = new Location(LocationManger.GPS_PROVIDER);
-            temp.setLatitude(lat);
-            temp.setLongitude(lng);
-            geofenceList.add(temp, r);
+            Location temp = new Location(LocationManager.GPS_PROVIDER);
+            temp.setLatitude(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))));
+            temp.setLongitude(Double.parseDouble(String.valueOf(lng.get(lng.size()-1))));
+            //geofenceList.add(Pair());
 
         } else {
             Toast.makeText(getContext(), "Please enter a valid postal code!", Toast.LENGTH_SHORT).show();
