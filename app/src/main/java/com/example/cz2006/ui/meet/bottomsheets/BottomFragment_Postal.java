@@ -163,6 +163,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
 
             GlobalHolder.getInstance().postalLat = lat;
             GlobalHolder.getInstance().postalLng = lng;
+            GlobalHolder.getInstance().postalTravelType = travelType;
 
             // Create a geofence
             geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))),Double.parseDouble(String.valueOf(lng.get(lng.size()-1))),r);

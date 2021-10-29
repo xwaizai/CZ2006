@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cz2006.GlobalHolder;
 import com.example.cz2006.R;
+import com.example.cz2006.ui.bottom_UI.TransitUI;
 import com.example.cz2006.ui.car_navi.CarUI;
 import com.example.cz2006.ui.covid_cluster.PlaceInfo;
 import com.google.android.material.button.MaterialButton;
@@ -80,7 +81,10 @@ public class BottomFragment_Start extends Fragment implements View.OnClickListen
                     Log.d("nimama: Long ", Double.toString(GlobalHolder.getInstance().getStart().m_Long));
 
                         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.bottom_fragment_container, new CarUI());
+                        if (GlobalHolder.getInstance().postalTravelType.get(pos).equals("car"))
+                            fragmentTransaction.replace(R.id.bottom_fragment_container, new CarUI());
+                        else
+                            fragmentTransaction.replace(R.id.bottom_fragment_container, new TransitUI());
                         fragmentTransaction.addToBackStack("start");
                         fragmentTransaction.commit();
 

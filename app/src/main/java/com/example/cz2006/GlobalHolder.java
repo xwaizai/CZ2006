@@ -18,6 +18,7 @@ public class GlobalHolder {
 
     public ArrayList<String> postalLat = new ArrayList<>();
     public ArrayList<String> postalLng = new ArrayList<>();
+    public ArrayList<String> postalTravelType = new ArrayList<>();
 
     private GlobalHolder()
     {
