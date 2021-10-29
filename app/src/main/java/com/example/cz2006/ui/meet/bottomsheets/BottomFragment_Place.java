@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.example.cz2006.R;
 import com.example.cz2006.ui.busarrival.BusRecyclerViewAdapter;
+import com.example.cz2006.ui.meet.PlaceMGR;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
@@ -58,9 +59,21 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Bundle bundle = getArguments();
+        String lat = bundle.getString("lat");
+        String lng = bundle.getString("lng");
         //Logic for finding locations should be here
 
+        ArrayList<String> sPlaces =  new ArrayList<>();
+        ArrayList<String> sLat = new ArrayList<>();
+        ArrayList<String> sLng = new ArrayList<>();
+        ArrayList<String> vicinity = new ArrayList<>();
+
+        PlaceMGR placeManager = new PlaceMGR();
+        placeManager.suggestPlace(lat, lng, sPlaces, sLat, sLng, vicinity);
+
         //Example how to insert to recyclerView
+        /*
         placeName.add("NTU");
         placeAdd.add("50 aksdas 12312");
         placeName.add("NTU2");
@@ -69,6 +82,14 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
         placeAdd.add("52 aksdas 12314");
         placeName.add("NTU4");
         placeAdd.add("53 aksdas 12315");
+        */
+
+        Log.d("size of sPlaces", Integer.toString(sPlaces.size()));
+        for (int i=0; i<sPlaces.size() ; i++) {
+            placeName.add(sPlaces.get(i));
+            placeAdd.add(vicinity.get(i));
+            Log.d("checking recycle view", sPlaces.get(i));
+        }
 
         initRecyclerView();
 
