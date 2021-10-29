@@ -69,7 +69,7 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
         ArrayList<String> sLng = new ArrayList<>();
         ArrayList<String> vicinity = new ArrayList<>();
 
-        PlaceMGR placeManager = new PlaceMGR();
+        PlaceMGR placeManager = new PlaceMGR(this);
         placeManager.suggestPlace(lat, lng, sPlaces, sLat, sLng, vicinity);
 
         //Example how to insert to recyclerView

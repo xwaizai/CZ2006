@@ -91,6 +91,7 @@ public class PlaceMGR
             return false;
         } catch(Exception e) {
             Log.d( "Error: ",e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
