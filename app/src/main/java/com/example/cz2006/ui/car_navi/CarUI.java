@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
@@ -51,7 +52,10 @@ public class CarUI extends BottomSheetDialogFragment implements View.OnClickList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // then get the button and set the listener
-        Button openMapButton = (Button) view.findViewById(R.id.open_google_map_but);
+        MaterialButton backBtn = view.findViewById(R.id.carBackBtn);
+        backBtn.setOnClickListener(this);
+
+        MaterialButton openMapButton = view.findViewById(R.id.open_google_map_btn);
         openMapButton.setOnClickListener(this);
     }
 
@@ -115,11 +119,19 @@ public class CarUI extends BottomSheetDialogFragment implements View.OnClickList
     @Override
     public void onClick(View view) {
         // Open google map!
-        Uri gmmIntentUri = Uri.parse("google.navigation:q="+
-                GlobalHolder.getInstance().getDesination().m_Address
+        switch(view.getId()){
+            case R.id.open_google_map_btn:
+                Uri gmmIntentUri = Uri.parse("google.navigation:q="+
+                        GlobalHolder.getInstance().getDesination().m_Address
                 );
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        startActivity(mapIntent);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+                break;
+            case R.id.carBackBtn:
+                getParentFragmentManager().popBackStackImmediate();
+                break;
+        }
+
     }
 }

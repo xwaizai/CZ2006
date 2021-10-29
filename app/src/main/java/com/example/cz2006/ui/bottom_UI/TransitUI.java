@@ -12,6 +12,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.akexorcist.googledirection.DirectionCallback;
 import com.akexorcist.googledirection.GoogleDirection;
@@ -25,16 +29,26 @@ import com.akexorcist.googledirection.model.Step;
 import com.akexorcist.googledirection.util.DirectionConverter;
 import com.example.cz2006.GlobalHolder;
 import com.example.cz2006.R;
+import com.example.cz2006.ui.meet.bottomsheets.PlaceRecyclerViewAdapter;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import org.jsoup.Jsoup;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransitUI extends BottomSheetDialogFragment {
+public class TransitUI extends Fragment {
     private Polyline m_RouteLine;
+
+    private View transitView;
+
+    private ArrayList<String> directions = new ArrayList<>();
+    private ArrayList<String> distance = new ArrayList<>();
+    private ArrayList<String> turn = new ArrayList<>();
+    private TransitRecyclerViewAdapter adapter;
 
     public TransitUI()
     {
@@ -44,7 +58,8 @@ public class TransitUI extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.bottom_sheet_transit, container, false);
+        transitView= inflater.inflate(R.layout.bottom_sheet_transit, container, false);
+        return transitView;
     }
 
     @Override
@@ -73,6 +88,15 @@ public class TransitUI extends BottomSheetDialogFragment {
                                     Leg leg = route.getLegList().get(0);
                                     Info distanceInfo = leg.getDistance();
                                     Info durationInfo = leg.getDuration();
+
+                                    //Log.d("onDirectionSuccess: ", route.getLegList().get(0).getViaWaypointList());
+                                    TextView totalDist = transitView.findViewById(R.id.totalDist);
+                                    TextView totalTime = transitView.findViewById(R.id.totalTime);
+                                    TextView dest = transitView.findViewById(R.id.finalDestination);
+
+                                    totalDist.setText(distanceInfo.getText());
+                                    totalTime.setText("("+durationInfo.getText()+")");
+
                                     // start drawing path
                                     ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
                                     PolylineOptions polylineOptions = DirectionConverter.createPolyline(
@@ -89,14 +113,27 @@ public class TransitUI extends BottomSheetDialogFragment {
                                     // most likely, if the transport mode is WALKING, it will have inner step list
                                     // if transport mode is TRANSIT, it will have no step list
                                     List<Step> individualSteps = leg.getStepList();
+
                                     for (Step indivStep : individualSteps)
                                     {
                                         // it will have it's own html instruction
                                         Log.d("testing transit",indivStep.getHtmlInstruction());
                                         if (indivStep.getStepList() != null) {
                                             for (Step stepOfStep : indivStep.getStepList()) {
-                                                Log.d("testing step of step", stepOfStep.getHtmlInstruction());
+                                                String dirText = Jsoup.parse(stepOfStep.getHtmlInstruction()).text();
+                                                String disText = stepOfStep.getDistance().getText();
+                                                Log.d("testing step of step", dirText);
+                                                Log.d("step time: ", disText);
+                                                directions.add(dirText);
+                                                distance.add(disText);
+                                                if(dirText.contains("Head"))
+                                                    turn.add("head");
+                                                else if(dirText.contains("Turn right"))
+                                                    turn.add("right");
+                                                else if(dirText.contains("Turn left"))
+                                                    turn.add("left");
                                             }
+                                            initRecyclerView();
                                         }
                                     }
                                 }
@@ -115,10 +152,18 @@ public class TransitUI extends BottomSheetDialogFragment {
                 );
     }
 
-    @Override
-    public void onDismiss(@NonNull DialogInterface dialog) {
-        m_RouteLine.remove();
-        // then remove the polyline!
-        super.onDismiss(dialog);
+//    @Override
+//    public void onDismiss(@NonNull DialogInterface dialog) {
+//        m_RouteLine.remove();
+//        // then remove the polyline!
+//        super.onDismiss(dialog);
+//    }
+
+    private void initRecyclerView(){
+        RecyclerView recyclerView = transitView.findViewById(R.id.transitRecyclerView);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+        adapter = new TransitRecyclerViewAdapter(directions, distance, turn,this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setAdapter(adapter);
     }
 }

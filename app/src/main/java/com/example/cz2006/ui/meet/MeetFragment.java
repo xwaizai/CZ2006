@@ -18,6 +18,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -46,11 +47,11 @@ public class MeetFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
-            LatLng singapore = new LatLng(1.3521, 103.8198);
+            LatLng singapore = new LatLng(1.19, 103.812);
 
             //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(singapore));
-            googleMap.animateCamera(CameraUpdateFactory.zoomTo(10.0f));
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(10.5f));
 
         }
 
@@ -106,6 +107,7 @@ public class MeetFragment extends Fragment {
                     for(int i = 0; i < Latitude.length ;i++){
                         LatLng temp = new LatLng(Latitude[i], Longitude[i]);
                         Marker marker = mMap.addMarker(new MarkerOptions().position(temp).title(Message[i]));
+                                //.icon(BitmapDescriptorFactory.fromResource(R.id.map_marker_alert)));
                         trafficincidentsmarkers.add(marker);
                     }
                     fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_baseline_warning_24));

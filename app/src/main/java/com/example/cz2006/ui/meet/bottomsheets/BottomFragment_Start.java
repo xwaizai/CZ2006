@@ -77,16 +77,16 @@ public class BottomFragment_Start extends Fragment implements View.OnClickListen
                     double lat = Double.parseDouble(GlobalHolder.getInstance().postalLat.get(pos));
                     PlaceInfo placeInfo = new PlaceInfo("", lat, lng, "");
                     GlobalHolder.getInstance().setStart(placeInfo);
-                    Log.d("nimama: Lat ", Double.toString(GlobalHolder.getInstance().getStart().m_Lat));
-                    Log.d("nimama: Long ", Double.toString(GlobalHolder.getInstance().getStart().m_Long));
+                    Log.d("Lat: Lat ", Double.toString(GlobalHolder.getInstance().getStart().m_Lat));
+                    Log.d("Long: Long ", Double.toString(GlobalHolder.getInstance().getStart().m_Long));
 
-                        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                        if (GlobalHolder.getInstance().postalTravelType.get(pos).equals("car"))
-                            fragmentTransaction.replace(R.id.bottom_fragment_container, new CarUI());
-                        else
-                            fragmentTransaction.replace(R.id.bottom_fragment_container, new TransitUI());
-                        fragmentTransaction.addToBackStack("start");
-                        fragmentTransaction.commit();
+                    FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                    if (GlobalHolder.getInstance().postalTravelType.get(pos).equals("car"))
+                        fragmentTransaction.replace(R.id.bottom_fragment_container, new CarUI());
+                    else
+                        fragmentTransaction.replace(R.id.bottom_fragment_container, new TransitUI());
+                    fragmentTransaction.addToBackStack("start");
+                    fragmentTransaction.commit();
 
                 }
                 else

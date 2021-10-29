@@ -31,6 +31,7 @@ import java.util.List;
 
 public class BottomFragment_Postal extends Fragment implements View.OnClickListener {
 
+
     private ArrayList<String> postcode = new ArrayList<>();
     private ArrayList<String> travelType = new ArrayList<>();
     private ArrayList<String> lat = new ArrayList<>();
@@ -136,9 +137,6 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
         if (button.getId() == R.id.trainOption) {
             trans_selected = "train";
             r = time_selected*300;
-        } else if (button.getId() == R.id.busOption) {
-            trans_selected = "bus";
-            r = (float) (time_selected*225);
         } else if (button.getId() == R.id.carOption) {
             trans_selected = "car";
             //r = trap0 velTime.get(lat.size()-1)*40;

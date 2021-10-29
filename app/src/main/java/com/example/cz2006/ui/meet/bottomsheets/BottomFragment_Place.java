@@ -47,6 +47,7 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
                              @Nullable Bundle savedInstanceState) {
         // If using add in BottomFragment_postal, need to removeAllViews
         // container.removeAllViews();
+
         placeView = inflater.inflate(R.layout.bottom_sheet_place, container, false);
 
         // Back and Next Button
@@ -62,6 +63,13 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if(placeName != null){
+            Log.d("onViewCreated: ", "clear");
+            placeName.clear();
+            placeAdd.clear();
+
+        }
+
         Bundle bundle = getArguments();
         String lat = bundle.getString("lat");
         String lng = bundle.getString("lng");
@@ -69,19 +77,19 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
 
         PlaceMGR placeManager = new PlaceMGR(this);
         String nextpageToken = placeManager.suggestPlace(lat, lng, sPlaces, sLat, sLng, vicinity);
-        for(int j=0; j<2; j++) {
+        for (int j = 0; j < 2; j++) {
             nextpageToken = placeManager.placeNextPage(lat, lng, sPlaces, sLat, sLng, vicinity, nextpageToken);
         }
 
         Log.d("size of sPlaces", Integer.toString(sPlaces.size()));
-        for (int i=0; i<sPlaces.size() ; i++) {
+        for (int i = 0; i < sPlaces.size(); i++) {
             placeName.add(sPlaces.get(i));
             placeAdd.add(vicinity.get(i));
             Log.d("checking recycle view", sPlaces.get(i));
         }
 
         initRecyclerView();
-
+        adapter.notifyDataSetChanged();
         // Search Bar
         TextInputEditText search = placeView.findViewById(R.id.placesInput);
 
@@ -100,14 +108,14 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
                 filter(s.toString());
             }
 
-            public void filter(String text){
+            public void filter(String text) {
                 ArrayList<String> tempN = new ArrayList<>();
                 ArrayList<String> tempA = new ArrayList<>();
                 Log.d("filter: ", Integer.toString(placeName.size()));
-                for(int i=0; i<placeName.size(); i++){
+                for (int i = 0; i < placeName.size(); i++) {
                     Log.d("filter: string: ", placeName.get(i));
-                    if(placeName.get(i).toLowerCase().contains(text.toLowerCase()) ||
-                            placeAdd.get(i).toLowerCase().contains(text.toLowerCase())){
+                    if (placeName.get(i).toLowerCase().contains(text.toLowerCase()) ||
+                            placeAdd.get(i).toLowerCase().contains(text.toLowerCase())) {
                         tempN.add(placeName.get(i));
                         tempA.add(placeAdd.get(i));
                     }
@@ -116,7 +124,6 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
                 adapter.updateList(tempN, tempA);
             }
         });
-
     }
 
     public void onClick(View v) {

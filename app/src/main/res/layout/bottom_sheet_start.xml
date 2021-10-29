@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Next, select your starting location:"
         android:textSize="16dp"
-        android:textColor="@color/black"
-        />
+        android:textColor="@color/black" />
 
     <View
         android:layout_width="match_parent"

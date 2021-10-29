@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_directions_car"
+        android:layout_weight="0.5"
+        android:id="@+id/turn_image"/>
+
+    <TextView
+        android:id="@+id/directions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Turn"
+        android:textSize="18dp"
+        android:layout_weight="1"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1km"
+        android:textSize="18dp"
+        android:layout_weight="0.3"
+        android:layout_gravity="end"
+        android:textColor="@color/black"/>
+
+
+</LinearLayout>

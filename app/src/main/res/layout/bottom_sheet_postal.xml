@@ -48,16 +48,6 @@
             app:iconSize="32dp" />
 
         <Button
-            android:id="@+id/busOption"
-            style="@style/Widget.App.Button.IconOnly"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:icon="@drawable/ic_baseline_directions_bus_24"
-            app:iconGravity="textStart"
-            app:iconSize="32dp"/>
-
-        <Button
             android:id="@+id/trainOption"
             style="@style/Widget.App.Button.IconOnly"
             android:layout_width="wrap_content"
