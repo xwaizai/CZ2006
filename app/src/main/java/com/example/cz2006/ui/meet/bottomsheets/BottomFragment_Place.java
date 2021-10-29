@@ -84,9 +84,11 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
         placeAdd.add("53 aksdas 12315");
         */
 
+        Log.d("size of sPlaces", Integer.toString(sPlaces.size()));
         for (int i=0; i<sPlaces.size() ; i++) {
             placeName.add(sPlaces.get(i));
             placeAdd.add(vicinity.get(i));
+            Log.d("checking recycle view", sPlaces.get(i));
         }
 
         initRecyclerView();

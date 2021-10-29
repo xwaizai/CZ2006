@@ -4,6 +4,8 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.example.cz2006.R;
+import com.example.cz2006.ui.meet.bottomsheets.BottomFragment_Place;
+import com.example.cz2006.ui.meet.bottomsheets.BottomFragment_Postal;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,6 +18,11 @@ import java.net.URL;
 import java.util.List;
 public class PlaceMGR
 {
+    private BottomFragment_Place context;
+    public PlaceMGR(BottomFragment_Place context){
+        this.context = context;
+    }
+
     public PlaceMGR()
     {
 
@@ -26,7 +33,7 @@ public class PlaceMGR
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            String api = ""; //INSERT API with geocode&places
+            String api = context.getResources().getString(R.string.google_maps_key); //INSERT API with geocode&places
 
             URL urlForGetRequest = new URL(
                     "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+
@@ -70,12 +77,13 @@ public class PlaceMGR
                         sLng.add(  location.getString("lng"));
 
 
-                        sPlaces.add(ri.getString("place_id"));
+                        sPlaces.add(ri.getString("name"));
                         vicinity.add(ri.getString("vicinity"));
 
                         Log.d( "In: ","IN2");
 
                     }
+                    Log.d("size of sPlaces", Integer.toString(sPlaces.size()));
                     return true;
                 }
 
