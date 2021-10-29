@@ -1,27 +1,18 @@
 package com.example.cz2006.ui.meet;
 
-import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import java.io.BufferedReader;
-
 import java.io.IOException;
-
 import java.io.InputStreamReader;
-
-import java.io.OutputStream;
-
-import java.io.OutputStreamWriter;
-
 import java.net.HttpURLConnection;
-
-import java.net.MalformedURLException;
-
-import java.net.ProtocolException;
 import java.net.URL;
-
-import org.json.*;
 
 public class TrafficIncidents {
 

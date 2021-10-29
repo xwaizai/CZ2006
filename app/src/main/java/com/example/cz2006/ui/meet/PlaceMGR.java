@@ -28,16 +28,17 @@ public class PlaceMGR
 
     }
 
-    public boolean suggestPlace(String lat , String lng, List<String> sPlaces, List<String> sLat, List<String> sLng,List<String> vicinity )
+    public String suggestPlace(String lat , String lng, List<String> sPlaces, List<String> sLat, List<String> sLng,List<String> vicinity )
     {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             String api = context.getResources().getString(R.string.google_maps_key); //INSERT API with geocode&places
+            String nextpageToken = null;
 
             URL urlForGetRequest = new URL(
                     "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+
-                    "&radius=2000&types=BAKERY|BAR|CAFE|DEPARTMENT_STORE|FOOD|GROCERY_OR_SUPERMARKET|GYM|LIBRARY|MOVIE_THEATER|MUSEUM|" +
+                            "&radius=2000&types=BAKERY|BAR|CAFE|DEPARTMENT_STORE|FOOD|GROCERY_OR_SUPERMARKET|GYM|LIBRARY|MOVIE_THEATER|MUSEUM|" +
                             "NATURAL_FEATURE|NIGHT_CLUB|POINT_OF_INTEREST|RESTAURANT|SHOPPING_MALL|SPA|STADIUM|TOURIST_ATTRACTION|ZOO" +
                             "&opennow&key=" + api);
 
@@ -66,6 +67,10 @@ public class PlaceMGR
 
                 if (jObject.getString("status").equals("OK"))
                 {
+                    if(jObject.getString("next_page_token") != null)
+                    {
+                        nextpageToken = jObject.getString("next_page_token");
+                    }
                     JSONArray result = (JSONArray) new JSONTokener(jObject.getString("results")).nextValue();
 
                     for (int i = 0; i < result.length(); i++) {
@@ -84,18 +89,88 @@ public class PlaceMGR
 
                     }
                     Log.d("size of sPlaces", Integer.toString(sPlaces.size()));
-                    return true;
+                    return nextpageToken;
                 }
 
             }
-            return false;
         } catch(Exception e) {
             Log.d( "Error: ",e.getMessage());
             e.printStackTrace();
-            return false;
         }
+        return "Error!!!";
+    }
+
+
+    public String placeNextPage(String lat , String lng, List<String> sPlaces, List<String> sLat, List<String> sLng,List<String> vicinity, String givenToken )
+    {
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            String api = context.getResources().getString(R.string.google_maps_key); //INSERT API with geocode&places
+            String nextpageToken = givenToken;
+
+            URL urlForGetRequest = new URL(
+                    "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"+"pagetoken="+nextpageToken+"&key="+api);
+
+            String readLine = null;
+            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
+            conection.setRequestMethod("GET");
+
+            int responseCode = conection.getResponseCode();
+
+            StringBuffer response = new StringBuffer();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                Log.d( "In: ","IN1");
+
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(conection.getInputStream()));
+                while ((readLine = in.readLine()) != null) {
+                    response.append(readLine);
+                }
+                in.close();
+                // print result
+                JSONObject jObject = new JSONObject(response.toString());
+
+                Log.d( "jObject String: ", jObject.getString("status"));
+
+                if (jObject.getString("status").equals("OK"))
+                {
+                    if(jObject.getString("next_page_token") != null)
+                    {
+                        nextpageToken = jObject.getString("next_page_token");
+                    }
+                    JSONArray result = (JSONArray) new JSONTokener(jObject.getString("results")).nextValue();
+
+                    for (int i = 0; i < result.length(); i++) {
+                        JSONObject ri = result.getJSONObject(i);
+                        JSONObject geometry = ri.getJSONObject("geometry");
+                        JSONObject location = geometry.getJSONObject("location");
+
+                        sLat.add(  location.getString("lat"));
+                        sLng.add(  location.getString("lng"));
+
+
+                        sPlaces.add(ri.getString("name"));
+                        vicinity.add(ri.getString("vicinity"));
+
+                        Log.d( "In: ","IN2");
+
+                    }
+                    Log.d("size of sPlaces", Integer.toString(sPlaces.size()));
+                    return nextpageToken;
+                }
+
+            }
+        } catch(Exception e) {
+            Log.d( "Error: ",e.getMessage());
+            e.printStackTrace();
+        }
+        return "Error!!!";
     }
 }
+
 
 
 // Example of return result

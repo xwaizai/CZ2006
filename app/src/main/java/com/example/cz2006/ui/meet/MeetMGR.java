@@ -1,12 +1,7 @@
 package com.example.cz2006.ui.meet;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.StrictMode;
 import android.util.Log;
-
-import androidx.fragment.app.Fragment;
 
 import com.example.cz2006.R;
 import com.example.cz2006.ui.meet.bottomsheets.BottomFragment_Postal;
@@ -60,7 +55,7 @@ public class MeetMGR {
                 // print result
                 JSONObject jObject = new JSONObject(response.toString());
 
-                Log.d( "jObject String: ", jObject.getString("status"));
+                // Log.d( "jObject String: ", jObject.getString("status"));
 
                 if (jObject.getString("status").equals("OK"))
                 {
@@ -72,7 +67,7 @@ public class MeetMGR {
                     //get the postal code lat and lng for future use to calculate the midpoint to meet
                     lat.add(  location.getString("lat"));
                     lng.add(  location.getString("lng"));
-                    Log.d( "In: ","IN2");
+                    // Log.d( "In: ","IN2");
                     return true;
                 }
 
@@ -84,55 +79,3 @@ public class MeetMGR {
         }
     }
 }
-
-
-/*
-{
-        "results" : [
-        {
-        "address_components" : [
-        {
-        "long_name" : "640202",
-        "short_name" : "640202",
-        "types" : [ "postal_code" ]
-        },
-        {
-        "long_name" : "Jurong West",
-        "short_name" : "Jurong West",
-        "types" : [ "neighborhood", "political" ]
-        },
-        {
-        "long_name" : "Singapore",
-        "short_name" : "Singapore",
-        "types" : [ "locality", "political" ]
-        },
-        {
-        "long_name" : "Singapore",
-        "short_name" : "SG",
-        "types" : [ "country", "political" ]
-        }
-        ],
-        "formatted_address" : "Singapore 640202",
-        "geometry" : {
-        "location" : {
-        "lat" : 1.34369,
-        "lng" : 103.714978
-        },
-        "location_type" : "APPROXIMATE",
-        "viewport" : {
-        "northeast" : {
-        "lat" : 1.3548449,
-        "lng" : 103.7309854
-        },
-        "southwest" : {
-        "lat" : 1.3325351,
-        "lng" : 103.6989706
-        }
-        }
-        },
-        "place_id" : "ChIJT9aZV-gP2jERA2rtX0OPYJk",
-        "types" : [ "postal_code" ]
-        }
-        ],
-        "status" : "OK"
-        } */

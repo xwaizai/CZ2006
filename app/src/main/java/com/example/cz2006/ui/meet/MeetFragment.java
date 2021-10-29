@@ -1,7 +1,6 @@
 package com.example.cz2006.ui.meet;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -55,8 +53,6 @@ public class MeetFragment extends Fragment {
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(10.0f));
 
         }
-
-
 
     };
 

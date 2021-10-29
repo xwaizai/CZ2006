@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,9 +20,10 @@ public class PlaceRecyclerViewAdapter extends RecyclerView.Adapter<com.example.c
 
     private ArrayList<String> mPlaceName = new ArrayList<>();
     private ArrayList<String> mPlaceAdd = new ArrayList<>();
-    private ArrayList<String> displayedList = new ArrayList<>();
 
     private BottomFragment_Place mContext;
+
+    private int pos = -1;
 
     private int selectedPosition = -1;
 
@@ -59,6 +59,7 @@ public class PlaceRecyclerViewAdapter extends RecyclerView.Adapter<com.example.c
             @Override
             public void onClick(View v) {
                 selectedPosition = position;
+                pos = position;
                 notifyDataSetChanged();
             }
         });
@@ -89,6 +90,10 @@ public class PlaceRecyclerViewAdapter extends RecyclerView.Adapter<com.example.c
         mPlaceName = name;
         mPlaceAdd = addr;
         notifyDataSetChanged();
+    }
+
+    public int getPosition() {
+        return this.pos;
     }
 
 

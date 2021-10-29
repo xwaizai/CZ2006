@@ -1,59 +1,33 @@
 package com.example.cz2006.ui.meet.bottomsheets;
 
 import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.os.StrictMode;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.cz2006.GlobalHolder;
-import com.example.cz2006.MainActivity;
 import com.example.cz2006.R;
 import com.example.cz2006.ui.meet.MeetMGR;
-import com.example.cz2006.ui.meet.TrafficIncidents;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.Math;
-import java.lang.Object;
 
 public class BottomFragment_Postal extends Fragment implements View.OnClickListener {
 
@@ -64,7 +38,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
     private ArrayList<Integer> travelTime = new ArrayList<>();
     private List<Pair<Location, Float>> geofenceList = new ArrayList<>();
 
-    float r;
+    private float r;
 
     private View postalView;
     private ChipGroup chipGroup;
@@ -75,7 +49,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        
+
         postalView = inflater.inflate(R.layout.bottom_sheet_postal, container, false);
 
         // Initialise Add/Go Button
@@ -104,39 +78,16 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             case  R.id.addBtn: {
                 // do something for add Button
                 retrieveInputs();
-                // change postal code to latlng
-                // create new array list of locations based on Database
-                // loop through new array list
-                /*
-                for (Location temp : Database) {
-                    ArrayList<Location> inside;
-                    for (Location fence : geofenceList) {
-                        int r = fence.getValue();
-                        if (temp.distanceTo(r) < r) {
-                            inside.add(fence);
-                        }
-                    }
-                    if (inside.length == geofenceList.length()) {
-                        double lat = temp.getLatitude();
-                        double lng = temp.getLongitude();
-                        LatLng markerTemp = new LatLng(lat, lng);
-                        googleMap.addMarker(new MarkerOptions()
-                                .position(markerTemp)
-                                .title("temporary marker");
-                        )
-                    }
-                }
-                */
                 break;
             }
 
             case R.id.goBtn: {
                 // Do something for go Button
-                if(postcode.size() > 0) {
+                if(postcode.size() > 1) {
                     Toast.makeText(getContext(), "Go", Toast.LENGTH_SHORT).show();
-                    retrieveInputs();
 
                     chipGroup.setVisibility(View.GONE);
+
                     // Go to next fragment(Search places)
                     Pair midpoint;
                     BottomFragment_Place nextFrag = new BottomFragment_Place();
@@ -147,6 +98,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
                     bundle.putString("lat", latTemp);
                     bundle.putString("lng", lngTemp);
                     nextFrag.setArguments(bundle);
+
                     FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.bottom_fragment_container, nextFrag);
                     fragmentTransaction.addToBackStack("postal");
@@ -160,65 +112,6 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             //.... etc
         }
     }
-
-    //check whether the postal code is valid using geocode
-    /*private boolean checkValid(String postalText)
-    {
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-            String api = getResources().getString(R.string.google_maps_key);
-
-            URL urlForGetRequest = new URL(
-                    "https://maps.googleapis.com/maps/api/geocode/json?address="
-                            + postalText +",+SG&key=" + api);
-
-            String readLine = null;
-            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
-            conection.setRequestMethod("GET");
-
-            int responseCode = conection.getResponseCode();
-
-            StringBuffer response = new StringBuffer();
-
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-
-                Log.d( "In: ","IN1");
-
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(conection.getInputStream()));
-                while ((readLine = in.readLine()) != null) {
-                    response.append(readLine);
-                }
-                in.close();
-                // print result
-                JSONObject jObject = new JSONObject(response.toString());
-
-                Log.d( "jObject String: ", jObject.getString("status"));
-
-                if (jObject.getString("status").equals("OK"))
-                {
-                    JSONArray result = (JSONArray) new JSONTokener(jObject.getString("results")).nextValue();
-                    JSONObject r1 = result.getJSONObject(0);
-                    JSONObject geometry = r1.getJSONObject("geometry");
-                    JSONObject location = geometry.getJSONObject("location");
-
-                    //get the postal code lat and lng for future use to calculate the midpoint to meet
-                    this.lat.add(  location.getString("lat"));
-                    this.lng.add(  location.getString("lng"));
-                    Log.d( "In: ","IN2");
-                    return true;
-                }
-
-            }
-            return false;
-        } catch(Exception e) {
-            Log.d( "Error: ",e.getMessage());
-            return false;
-        }
-    }*/
-
-
 
     private void retrieveInputs() {
 
@@ -252,6 +145,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             r = time_selected*600;
         }
 
+        // setting validPostal to false;
         // Make sure the postal code is 6 digit
         if(postalText.length() == 6 && meetMGR.checkValidPostal(postalText,this.lat,this.lng))
         {
@@ -267,14 +161,13 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             Log.d( "postalinfo ",Integer.toString(travelTime.get(lat.size()-1)));
             Log.d( "postalinfo ",travelType.get(lat.size()-1));
 
+            GlobalHolder.getInstance().postalLat = lat;
+            GlobalHolder.getInstance().postalLng = lng;
+
             // Create a geofence
             geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))),Double.parseDouble(String.valueOf(lng.get(lng.size()-1))),r);
             // Add to geofence list
             Location temp = new Location("");
-            /*
-            temp.setLatitude(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))));
-            temp.setLongitude(Double.parseDouble(String.valueOf(lng.get(lng.size()-1))));
-            geofenceList.add(Pair(temp, r)); */
 
         } else {
             Toast.makeText(getContext(), "Please enter a valid postal code!", Toast.LENGTH_SHORT).show();
@@ -364,4 +257,5 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
         Pair p = new Pair(latAvgStr, lngAvgStr);
         return p;
     }
+
 }

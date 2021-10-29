@@ -3,6 +3,8 @@ package com.example.cz2006;
 import com.example.cz2006.ui.covid_cluster.PlaceInfo;
 import com.google.android.gms.maps.GoogleMap;
 
+import java.util.ArrayList;
+
 // simple singleton to handle all of the needed variables
 public class GlobalHolder {
     // single variable that can never be changed and will exist throughout the lifetime of the program
@@ -13,6 +15,9 @@ public class GlobalHolder {
     private PlaceInfo m_Start;
     // google map so that other classes can also access it!
     public GoogleMap m_GMap;
+
+    public ArrayList<String> postalLat = new ArrayList<>();
+    public ArrayList<String> postalLng = new ArrayList<>();
 
     private GlobalHolder()
     {
@@ -45,4 +50,6 @@ public class GlobalHolder {
     {
         return m_Start;
     }
+
+
 }

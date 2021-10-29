@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-
 import com.example.cz2006.R;
 import com.example.cz2006.databinding.FragmentCovidsitrepBinding;
 

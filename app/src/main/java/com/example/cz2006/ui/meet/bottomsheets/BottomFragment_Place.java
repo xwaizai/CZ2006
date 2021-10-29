@@ -1,6 +1,13 @@
 package com.example.cz2006.ui.meet.bottomsheets;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,24 +17,15 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.example.cz2006.GlobalHolder;
 import com.example.cz2006.R;
-import com.example.cz2006.ui.busarrival.BusRecyclerViewAdapter;
+import com.example.cz2006.ui.covid_cluster.PlaceInfo;
 import com.example.cz2006.ui.meet.PlaceMGR;
-import com.google.android.libraries.places.api.model.Place;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.internal.TextWatcherAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class BottomFragment_Place extends Fragment implements View.OnClickListener{
 
@@ -37,12 +35,17 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
     private ArrayList<String> placeName = new ArrayList<>();
     private ArrayList<String> placeAdd = new ArrayList<>();
 
+    private ArrayList<String> sPlaces =  new ArrayList<>();
+    private ArrayList<String> sLat = new ArrayList<>();
+    private ArrayList<String> sLng = new ArrayList<>();
+    private ArrayList<String> vicinity = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // If using add in BottomFragment_postal, need to removeallviews
+        // If using add in BottomFragment_postal, need to removeAllViews
         // container.removeAllViews();
         placeView = inflater.inflate(R.layout.bottom_sheet_place, container, false);
 
@@ -64,25 +67,11 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
         String lng = bundle.getString("lng");
         //Logic for finding locations should be here
 
-        ArrayList<String> sPlaces =  new ArrayList<>();
-        ArrayList<String> sLat = new ArrayList<>();
-        ArrayList<String> sLng = new ArrayList<>();
-        ArrayList<String> vicinity = new ArrayList<>();
-
         PlaceMGR placeManager = new PlaceMGR(this);
-        placeManager.suggestPlace(lat, lng, sPlaces, sLat, sLng, vicinity);
-
-        //Example how to insert to recyclerView
-        /*
-        placeName.add("NTU");
-        placeAdd.add("50 aksdas 12312");
-        placeName.add("NTU2");
-        placeAdd.add("51 aksdas 12313");
-        placeName.add("NTU3");
-        placeAdd.add("52 aksdas 12314");
-        placeName.add("NTU4");
-        placeAdd.add("53 aksdas 12315");
-        */
+        String nextpageToken = placeManager.suggestPlace(lat, lng, sPlaces, sLat, sLng, vicinity);
+        for(int j=0; j<2; j++) {
+            nextpageToken = placeManager.placeNextPage(lat, lng, sPlaces, sLat, sLng, vicinity, nextpageToken);
+        }
 
         Log.d("size of sPlaces", Integer.toString(sPlaces.size()));
         for (int i=0; i<sPlaces.size() ; i++) {
@@ -138,8 +127,23 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
                 getParentFragmentManager().popBackStackImmediate();
                 break;
             case R.id.nextBtn:
+                // Save selection to globalHolder
+                int pos = adapter.getPosition();
+                if(pos != -1) {
+                    double lat = Double.parseDouble(sLat.get(pos));
+                    double lng = Double.parseDouble(sLng.get(pos));
+                    PlaceInfo placeInfo = new PlaceInfo(sPlaces.get(pos), lat, lng, "");
+                    GlobalHolder.getInstance().setDestination(placeInfo);
+                    Log.d("sPlace: ", GlobalHolder.getInstance().getDesination().m_Name);
 
-                //Add navigation to next
+                    // Add navigation to next
+                    FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.bottom_fragment_container, new BottomFragment_Start());
+                    fragmentTransaction.addToBackStack("places");
+                    fragmentTransaction.commit();
+                }
+                else
+                    Toast.makeText(getContext(), "Please select a starting location", Toast.LENGTH_SHORT).show();
                 break;
 
         }

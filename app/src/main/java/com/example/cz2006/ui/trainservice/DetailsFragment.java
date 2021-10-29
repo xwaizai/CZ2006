@@ -1,9 +1,6 @@
 package com.example.cz2006.ui.trainservice;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.cz2006.R;
 

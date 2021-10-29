@@ -80,9 +80,11 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.22864583333333333" />
         <entry key="app/src/main/res/layout/bottom_sheet.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/bottom_sheet_car.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/bottom_sheet_container.xml" value="0.24947916666666667" />
         <entry key="app/src/main/res/layout/bottom_sheet_place.xml" value="0.335" />
         <entry key="app/src/main/res/layout/bottom_sheet_postal.xml" value="0.39010416666666664" />
+        <entry key="app/src/main/res/layout/bottom_sheet_start.xml" value="0.3296875" />
         <entry key="app/src/main/res/layout/bottomfragment_postal.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/covid_infobox.xml" value="0.221875" />
@@ -102,6 +104,8 @@
         <entry key="app/src/main/res/layout/hamburger.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/layout/layout_buslistitem.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_placelistitem.xml" value="0.221875" />
+        <entry key="app/src/main/res/layout/layout_placeliststart.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_startlistitem.xml" value="0.2712962962962963" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.3802083333333333" />
         <entry key="app/src/main/res/layout/postal_code.xml" value="0.39010416666666664" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.335" />
@@ -111,7 +115,8 @@
     </option>
   </component>
   <component name="JavadocGenerationManager">
-    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../test" />
+    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Downloads" />
+    <option name="OPTION_DOCUMENT_TAG_DEPRECATED" value="false" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
