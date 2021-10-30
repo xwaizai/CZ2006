@@ -164,7 +164,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             GlobalHolder.getInstance().postalTravelType = travelType;
 
             // Create a geofence
-            geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))),Double.parseDouble(String.valueOf(lng.get(lng.size()-1))),r);
+            geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))),Double.parseDouble(String.valueOf(lng.get(lng.size()-1))),r, postalView);
             // Add to geofence list
             Location temp = new Location("");
 
@@ -220,7 +220,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
                     } else if (travelType.get(i).equals("bus")) {
                         r = (float) (travelTime.get(i)*225);
                     }
-                    geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(i))), Double.parseDouble(String.valueOf(lng.get(i))), r);
+                    geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(i))), Double.parseDouble(String.valueOf(lng.get(i))), r, postalView);
                 }
                 chipGroup.removeView(chip);
             }

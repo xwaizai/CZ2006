@@ -6,18 +6,26 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.cz2006.GlobalHolder;
+import com.example.cz2006.R;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -58,16 +66,18 @@ public class GeofenceHelper extends ContextWrapper {
                 .build();
     }
 
-    public void createGeo(double latitude, double longitude, float radius) {
+    public void createGeo(double latitude, double longitude, float radius, View v) {
         LatLng latLng = new LatLng(latitude, longitude);
-        addMarker(latLng);
+        addMarker(latLng, v);
         addCircle(latLng, radius);
         addGeofence(latLng, radius);
     }
 
-    private void addMarker(LatLng latLng) {
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng);
+    private void addMarker(LatLng latLng, View v) {
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng)
+                .icon(bitmapDescriptorFromVector(v.getContext(), R.drawable.pin_circle_32));
         GlobalHolder.getInstance().m_GMap.addMarker(markerOptions);
+
     }
 
     private void addCircle(LatLng latLng, float radius) {
@@ -139,5 +149,14 @@ public class GeofenceHelper extends ContextWrapper {
         Location.distanceTo()
         return;
     } */
+
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
 
 }

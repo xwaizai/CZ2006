@@ -1,7 +1,5 @@
 package com.example.cz2006.ui.bottom_UI;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cz2006.R;
-import com.example.cz2006.ui.meet.bottomsheets.BottomFragment_Start;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 
@@ -54,12 +50,21 @@ public class TransitRecyclerViewAdapter extends RecyclerView.Adapter<TransitRecy
         holder.directions.setText(mDirections.get(position));
         holder.distance.setText(mDistance.get(position));
 
+        // TODO: Find better vector graphics for slight and sharp
         if(mTurn.get(position).equals("head"))
             holder.turn.setImageResource(R.drawable.arrow_up_thin);
         else if(mTurn.get(position).equals("left"))
             holder.turn.setImageResource(R.drawable.arrow_left_top);
         else if(mTurn.get(position).equals("right"))
             holder.turn.setImageResource(R.drawable.arrow_right_top);
+//        else if(mTurn.get(position).equals("slight left"))
+//            holder.turn.setImageResource(R.drawable.slight_left_arrow);
+//        else if(mTurn.get(position).equals("slight right"))
+//            holder.turn.setImageResource(R.drawable.slight_right_arrow);
+//        else if(mTurn.get(position).equals("sharp left"))
+//            holder.turn.setImageResource(R.drawable.sharp_left_arrow);
+//        else if(mTurn.get(position).equals("slight right"))
+//            holder.turn.setImageResource(R.drawable.sharp_right_arrow);
     }
 
 

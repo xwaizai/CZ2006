@@ -60,6 +60,7 @@ public class PlaceRecyclerViewAdapter extends RecyclerView.Adapter<com.example.c
             public void onClick(View v) {
                 selectedPosition = position;
                 pos = position;
+
                 notifyDataSetChanged();
             }
         });

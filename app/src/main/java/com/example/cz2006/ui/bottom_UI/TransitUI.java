@@ -1,8 +1,15 @@
 package com.example.cz2006.ui.bottom_UI;
 
 import android.content.Context;
-import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,18 +37,27 @@ import com.akexorcist.googledirection.model.Step;
 import com.akexorcist.googledirection.util.DirectionConverter;
 import com.example.cz2006.GlobalHolder;
 import com.example.cz2006.R;
-import com.example.cz2006.ui.meet.bottomsheets.PlaceRecyclerViewAdapter;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.button.MaterialButton;
 
 import org.jsoup.Jsoup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class TransitUI extends Fragment {
+public class TransitUI extends Fragment implements View.OnClickListener  {
     private Polyline m_RouteLine;
 
     private View transitView;
@@ -49,6 +66,8 @@ public class TransitUI extends Fragment {
     private ArrayList<String> distance = new ArrayList<>();
     private ArrayList<String> turn = new ArrayList<>();
     private TransitRecyclerViewAdapter adapter;
+    private GoogleMap gMap;
+    private Marker destMarker;
 
     public TransitUI()
     {
@@ -59,6 +78,12 @@ public class TransitUI extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         transitView= inflater.inflate(R.layout.bottom_sheet_transit, container, false);
+
+        MaterialButton goBtn = transitView.findViewById(R.id.transitBackBtn);
+        goBtn.setOnClickListener(this);
+
+        gMap = GlobalHolder.getInstance().m_GMap;
+
         return transitView;
     }
 
@@ -94,8 +119,38 @@ public class TransitUI extends Fragment {
                                     TextView totalTime = transitView.findViewById(R.id.totalTime);
                                     TextView dest = transitView.findViewById(R.id.finalDestination);
 
-                                    totalDist.setText(distanceInfo.getText());
-                                    totalTime.setText("("+durationInfo.getText()+")");
+                                    //If digit, set bold
+                                    String durStr = durationInfo.getText();
+                                    final SpannableStringBuilder spannable = new SpannableStringBuilder(durStr);
+
+                                    Pattern pattern = Pattern.compile("[0-9]+");
+                                    Matcher matcher = pattern.matcher(durStr);
+                                    while(matcher.find()) {
+                                        spannable.setSpan(
+                                                new android.text.style.StyleSpan(android.graphics.Typeface.BOLD)
+                                                , matcher.start(), matcher.end(),
+                                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                    }
+                                    totalTime.setText(spannable);
+                                    totalDist.setText("("+distanceInfo.getText()+")");
+                                    dest.setText(leg.getEndAddress());
+
+
+                                    LatLng start = leg.getStartLocation().getCoordination();
+                                    LatLng end = leg.getEndLocation().getCoordination();
+
+                                    final LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                                    builder.include(start);
+                                    builder.include(end);
+                                    LatLngBounds bounds = builder.build();
+
+                                    //Change the padding as per needed
+                                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,200);
+                                    gMap.setPadding(0,0,0,900);
+                                    gMap.animateCamera(cu);
+
+                                    //Add destination marker
+                                    destMarker = gMap.addMarker(new MarkerOptions().position(end).title("Destination"));
 
                                     // start drawing path
                                     ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
@@ -122,16 +177,29 @@ public class TransitUI extends Fragment {
                                             for (Step stepOfStep : indivStep.getStepList()) {
                                                 String dirText = Jsoup.parse(stepOfStep.getHtmlInstruction()).text();
                                                 String disText = stepOfStep.getDistance().getText();
+
                                                 Log.d("testing step of step", dirText);
                                                 Log.d("step time: ", disText);
                                                 directions.add(dirText);
                                                 distance.add(disText);
-                                                if(dirText.contains("Head"))
+                                                if(dirText.contains("Head") || dirText.contains("Continue"))
                                                     turn.add("head");
                                                 else if(dirText.contains("Turn right"))
                                                     turn.add("right");
                                                 else if(dirText.contains("Turn left"))
                                                     turn.add("left");
+                                                else if(dirText.contains("Slight left")) //TODO
+                                                    turn.add("slight left");
+                                                else if(dirText.contains("Slight right")) //TODO
+                                                    turn.add("slight right");
+                                                else if(dirText.contains("Sharp left")) //TODO
+                                                    turn.add("sharp left");
+                                                else if(dirText.contains("Sharp right")) //TODO
+                                                    turn.add("sharp right");
+                                                else if(dirText.contains("Take"))
+                                                    turn.add("take");
+                                                else
+                                                    turn.add("");
                                             }
                                             initRecyclerView();
                                         }
@@ -159,6 +227,8 @@ public class TransitUI extends Fragment {
 //        super.onDismiss(dialog);
 //    }
 
+
+
     private void initRecyclerView(){
         RecyclerView recyclerView = transitView.findViewById(R.id.transitRecyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
@@ -166,4 +236,21 @@ public class TransitUI extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(adapter);
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.transitBackBtn: {
+                // do something for add Button
+                getParentFragmentManager().popBackStackImmediate();
+
+                destMarker.remove();
+                gMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(1.19, 103.812)));
+                gMap.setPadding(0,0,0,0);
+                gMap.animateCamera(CameraUpdateFactory.zoomTo(10.5f));
+                break;
+            }
+        }
+    }
+
 }

@@ -39,6 +39,12 @@ public class BottomFragment_Start extends Fragment implements View.OnClickListen
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        if(!postalCode.isEmpty()){
+            Log.d("onViewCreated: ", "clear");
+            postalCode.clear();
+            adapter.notifyDataSetChanged();
+        }
+
         startView = inflater.inflate(R.layout.bottom_sheet_start, container, false);
 
         // Initialise Add/Go Button
@@ -58,7 +64,9 @@ public class BottomFragment_Start extends Fragment implements View.OnClickListen
         ChipGroup chipGroup = startView.getRootView().findViewById(R.id.chipGroup);
         for(int i=0; i<chipGroup.getChildCount(); i++) {
             Chip chip = (Chip) chipGroup.getChildAt(i);
-            postalCode.add(chip.getText().toString());
+            String checkDupString = chip.getText().toString();
+            if(!postalCode.contains(checkDupString))
+                postalCode.add(chip.getText().toString());
         }
         initRecyclerView();
     }

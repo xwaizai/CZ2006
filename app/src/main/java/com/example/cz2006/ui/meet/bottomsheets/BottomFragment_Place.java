@@ -48,6 +48,18 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
         // If using add in BottomFragment_postal, need to removeAllViews
         // container.removeAllViews();
 
+        // Making sure when screen is popped back, all arraylis are clear
+        if(!placeName.isEmpty()){
+            Log.d("onViewCreated: ", "clear");
+            placeName.clear();
+            placeAdd.clear();
+            sPlaces.clear();
+            sLat.clear();
+            sLng.clear();
+            vicinity.clear();
+            adapter.notifyDataSetChanged();
+        }
+
         placeView = inflater.inflate(R.layout.bottom_sheet_place, container, false);
 
         // Back and Next Button
@@ -63,13 +75,6 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(placeName != null){
-            Log.d("onViewCreated: ", "clear");
-            placeName.clear();
-            placeAdd.clear();
-
-        }
-
         Bundle bundle = getArguments();
         String lat = bundle.getString("lat");
         String lng = bundle.getString("lng");
@@ -77,9 +82,10 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
 
         PlaceMGR placeManager = new PlaceMGR(this);
         String nextpageToken = placeManager.suggestPlace(lat, lng, sPlaces, sLat, sLng, vicinity);
-        for (int j = 0; j < 2; j++) {
-            nextpageToken = placeManager.placeNextPage(lat, lng, sPlaces, sLat, sLng, vicinity, nextpageToken);
-        }
+        //TODO: Not working
+//        for (int j = 0; j < 2; j++) {
+//            nextpageToken = placeManager.placeNextPage(lat, lng, sPlaces, sLat, sLng, vicinity, nextpageToken);
+//        }
 
         Log.d("size of sPlaces", Integer.toString(sPlaces.size()));
         for (int i = 0; i < sPlaces.size(); i++) {
@@ -89,7 +95,6 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
         }
 
         initRecyclerView();
-        adapter.notifyDataSetChanged();
         // Search Bar
         TextInputEditText search = placeView.findViewById(R.id.placesInput);
 

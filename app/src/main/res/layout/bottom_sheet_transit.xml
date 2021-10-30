@@ -13,31 +13,41 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/map_marker"
         android:textSize="18dp"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textColor="@color/black"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
 
         <TextView
             android:id="@+id/totalTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="14 min"
-            android:textSize="18dp"
+            android:text=""
+            android:textSize="20dp"
             android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/totalDist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(8.1km)"
-            android:textSize="18dp"
+            android:text=""
+            android:textSize="20dp"
             android:layout_marginLeft="10dp"
             android:textColor="@color/quantum_grey700"/>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"/>
+
     <!--TODO: RecyclerView thingy here-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transitRecyclerView"
@@ -45,5 +55,23 @@
         android:layout_height="200dp"
         app:layoutManager="LinearLayoutManager"
         android:scrollbars="vertical"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/transitBackBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/orange"
+            android:text="Back"
+            android:textColor="@color/black"
+            app:cornerRadius="15dp" />
+
+
+    </LinearLayout>
 
 </LinearLayout>

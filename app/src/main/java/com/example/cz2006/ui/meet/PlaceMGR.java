@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.example.cz2006.R;
 import com.example.cz2006.ui.meet.bottomsheets.BottomFragment_Place;
-import com.example.cz2006.ui.meet.bottomsheets.BottomFragment_Postal;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -67,7 +66,7 @@ public class PlaceMGR
 
                 if (jObject.getString("status").equals("OK"))
                 {
-                    if(jObject.getString("next_page_token") != null)
+                    if(jObject.getString("next_page_token") != "")
                     {
                         nextpageToken = jObject.getString("next_page_token");
                     }
