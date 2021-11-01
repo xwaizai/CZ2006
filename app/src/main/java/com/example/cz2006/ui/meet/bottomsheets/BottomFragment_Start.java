@@ -1,5 +1,6 @@
 package com.example.cz2006.ui.meet.bottomsheets;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class BottomFragment_Start extends Fragment implements View.OnClickListen
     private StartRecyclerViewAdapter adapter;
 
     private ArrayList<String> postalCode = new ArrayList<>();
+    private ArrayList<Drawable> chipIcon = new ArrayList<>();
 
     @Nullable
     @Override
@@ -67,6 +69,7 @@ public class BottomFragment_Start extends Fragment implements View.OnClickListen
             String checkDupString = chip.getText().toString();
             if(!postalCode.contains(checkDupString))
                 postalCode.add(chip.getText().toString());
+                chipIcon.add(chip.getChipIcon());
         }
         initRecyclerView();
     }
@@ -107,7 +110,7 @@ public class BottomFragment_Start extends Fragment implements View.OnClickListen
     private void initRecyclerView(){
         RecyclerView recyclerView = startView.findViewById(R.id.startRecyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
-        adapter = new StartRecyclerViewAdapter(postalCode,this);
+        adapter = new StartRecyclerViewAdapter(postalCode, chipIcon,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(adapter);
     }
