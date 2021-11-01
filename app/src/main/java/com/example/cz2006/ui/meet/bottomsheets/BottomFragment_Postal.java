@@ -44,6 +44,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
     private View postalView;
     private ChipGroup chipGroup;
     private GeofenceHelper geofenceHelper;
+    private String postalText;
 
     @Nullable
     @Override
@@ -128,7 +129,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
         String trans_selected = "car";
 
         // Scan text input from postal code input
-        String postalText = postalTextLayout.getText().toString();
+        postalText = postalTextLayout.getText().toString();
 
         // Scan slider input
         int time_selected = (int) timeSlider.getValue();
@@ -164,7 +165,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             GlobalHolder.getInstance().postalTravelType = travelType;
 
             // Create a geofence
-            geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))),Double.parseDouble(String.valueOf(lng.get(lng.size()-1))),r, postalView);
+            geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(lat.size()-1))),Double.parseDouble(String.valueOf(lng.get(lng.size()-1))),r, postalView, postalText);
             // Add to geofence list
             Location temp = new Location("");
 
@@ -220,7 +221,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
                     } else if (travelType.get(i).equals("bus")) {
                         r = (float) (travelTime.get(i)*225);
                     }
-                    geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(i))), Double.parseDouble(String.valueOf(lng.get(i))), r, postalView);
+                    geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(i))), Double.parseDouble(String.valueOf(lng.get(i))), r, postalView, postalText);
                 }
                 chipGroup.removeView(chip);
             }

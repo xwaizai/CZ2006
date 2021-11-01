@@ -66,15 +66,15 @@ public class GeofenceHelper extends ContextWrapper {
                 .build();
     }
 
-    public void createGeo(double latitude, double longitude, float radius, View v) {
+    public void createGeo(double latitude, double longitude, float radius, View v, String postal) {
         LatLng latLng = new LatLng(latitude, longitude);
-        addMarker(latLng, v);
+        addMarker(latLng, v, postal);
         addCircle(latLng, radius);
         addGeofence(latLng, radius);
     }
 
-    private void addMarker(LatLng latLng, View v) {
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng)
+    private void addMarker(LatLng latLng, View v, String postal) {
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(postal)
                 .icon(bitmapDescriptorFromVector(v.getContext(), R.drawable.pin_circle_32));
         GlobalHolder.getInstance().m_GMap.addMarker(markerOptions);
 

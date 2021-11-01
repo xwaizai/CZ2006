@@ -66,10 +66,10 @@ public class PlaceMGR
 
                 if (jObject.getString("status").equals("OK"))
                 {
-                    if(jObject.getString("next_page_token") != "")
-                    {
-                        nextpageToken = jObject.getString("next_page_token");
-                    }
+                    //if(!jObject.getString("next_page_token").equals(""))
+                    //{
+                    //  nextpageToken = jObject.getString("next_page_token");
+                    //}
                     JSONArray result = (JSONArray) new JSONTokener(jObject.getString("results")).nextValue();
 
                     for (int i = 0; i < result.length(); i++) {
@@ -88,7 +88,7 @@ public class PlaceMGR
 
                     }
                     Log.d("size of sPlaces", Integer.toString(sPlaces.size()));
-                    return nextpageToken;
+                    return "";
                 }
 
             }

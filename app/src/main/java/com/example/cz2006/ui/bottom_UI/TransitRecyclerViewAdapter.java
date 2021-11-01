@@ -51,20 +51,16 @@ public class TransitRecyclerViewAdapter extends RecyclerView.Adapter<TransitRecy
         holder.distance.setText(mDistance.get(position));
 
         // TODO: Find better vector graphics for slight and sharp
-        if(mTurn.get(position).equals("head"))
-            holder.turn.setImageResource(R.drawable.arrow_up_thin);
-        else if(mTurn.get(position).equals("left"))
-            holder.turn.setImageResource(R.drawable.arrow_left_top);
-        else if(mTurn.get(position).equals("right"))
-            holder.turn.setImageResource(R.drawable.arrow_right_top);
-//        else if(mTurn.get(position).equals("slight left"))
-//            holder.turn.setImageResource(R.drawable.slight_left_arrow);
-//        else if(mTurn.get(position).equals("slight right"))
-//            holder.turn.setImageResource(R.drawable.slight_right_arrow);
-//        else if(mTurn.get(position).equals("sharp left"))
-//            holder.turn.setImageResource(R.drawable.sharp_left_arrow);
-//        else if(mTurn.get(position).equals("slight right"))
-//            holder.turn.setImageResource(R.drawable.sharp_right_arrow);
+        if(mTurn.get(position).equals("walk"))
+            holder.turn.setImageResource(R.drawable.directions_walk_24);
+        else if(mTurn.get(position).equals("bus"))
+            holder.turn.setImageResource(R.drawable.ic_baseline_directions_bus_24);
+        else if(mTurn.get(position).equals("train"))
+            holder.turn.setImageResource(R.drawable.ic_baseline_train_24);
+        else if(mTurn.get(position).equals("destination"))
+            holder.turn.setImageResource(R.drawable.ic_baseline_celebration_24);
+        else
+            holder.turn.setImageResource(R.drawable.emptyplaceholder);
     }
 
 

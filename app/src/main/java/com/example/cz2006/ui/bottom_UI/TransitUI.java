@@ -172,38 +172,38 @@ public class TransitUI extends Fragment implements View.OnClickListener  {
                                     for (Step indivStep : individualSteps)
                                     {
                                         // it will have it's own html instruction
-                                        Log.d("testing transit",indivStep.getHtmlInstruction());
+                                        String transitOrWalk = indivStep.getHtmlInstruction();
+                                        Log.d("testing transit", transitOrWalk);
+                                        directions.add(transitOrWalk);
+                                        distance.add("");
+                                        String firstWord = transitOrWalk.split(" ", 2)[0];
+                                        if(firstWord.contains("Walk"))
+                                            turn.add("walk");
+                                        else if(firstWord.contains("Bus"))
+                                            turn.add("bus");
+                                        else if(firstWord.contains("Subway"))
+                                            turn.add("train");
+                                        else
+                                            turn.add("");
+
                                         if (indivStep.getStepList() != null) {
                                             for (Step stepOfStep : indivStep.getStepList()) {
                                                 String dirText = Jsoup.parse(stepOfStep.getHtmlInstruction()).text();
                                                 String disText = stepOfStep.getDistance().getText();
 
-                                                Log.d("testing step of step", dirText);
+                                                Log.d("transit step of step", dirText);
                                                 Log.d("step time: ", disText);
-                                                directions.add(dirText);
-                                                distance.add(disText);
-                                                if(dirText.contains("Head") || dirText.contains("Continue"))
-                                                    turn.add("head");
-                                                else if(dirText.contains("Turn right"))
-                                                    turn.add("right");
-                                                else if(dirText.contains("Turn left"))
-                                                    turn.add("left");
-                                                else if(dirText.contains("Slight left")) //TODO
-                                                    turn.add("slight left");
-                                                else if(dirText.contains("Slight right")) //TODO
-                                                    turn.add("slight right");
-                                                else if(dirText.contains("Sharp left")) //TODO
-                                                    turn.add("sharp left");
-                                                else if(dirText.contains("Sharp right")) //TODO
-                                                    turn.add("sharp right");
-                                                else if(dirText.contains("Take"))
-                                                    turn.add("take");
+                                                if(dirText.contains("Destination"))
+                                                    turn.add("destination");
                                                 else
                                                     turn.add("");
+                                                directions.add(dirText);
+                                                distance.add(disText);
                                             }
-                                            initRecyclerView();
                                         }
                                     }
+                                    Log.d("size of directions ", Integer.toString(directions.size()));
+                                    initRecyclerView();
                                 }
                                 else
                                 {
