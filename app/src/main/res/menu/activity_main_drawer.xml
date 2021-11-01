@@ -20,9 +20,6 @@
             android:id="@+id/nav_trainservice"
             android:icon="@drawable/ic_baseline_train_24"
             android:title="@string/menu_trainservice" />
-        <item
-            android:id="@+id/nav_guide"
-            android:icon="@drawable/ic_baseline_error_24"
-            android:title="@string/menu_guide" />
+
     </group>
 </menu>
