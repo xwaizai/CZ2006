@@ -144,7 +144,7 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
                 if(pos != -1) {
                     double lat = Double.parseDouble(sLat.get(pos));
                     double lng = Double.parseDouble(sLng.get(pos));
-                    PlaceInfo placeInfo = new PlaceInfo(sPlaces.get(pos), lat, lng, "");
+                    PlaceInfo placeInfo = new PlaceInfo(sPlaces.get(pos), lat, lng, vicinity.get(pos));
                     GlobalHolder.getInstance().setDestination(placeInfo);
                     Log.d("sPlace: ", GlobalHolder.getInstance().getDesination().m_Name);
 
