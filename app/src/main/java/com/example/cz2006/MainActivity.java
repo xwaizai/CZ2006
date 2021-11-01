@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -20,6 +23,8 @@ import com.example.cz2006.ui.guide.GuideFragment;
 import com.example.cz2006.ui.meet.MeetFragment;
 import com.example.cz2006.ui.trainservice.TrainServiceFragment;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,10 +52,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_close
         );
 
+
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         displayView(R.id.nav_meet);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView greeting = headerView.findViewById(R.id.greetingText);
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+        if(timeOfDay >= 0 && timeOfDay < 12){
+            greeting.setText("Good Morning");
+        } else if(timeOfDay >= 12 && timeOfDay < 16){
+            greeting.setText("Good Afternoon");
+        }else if(timeOfDay >= 16 && timeOfDay < 24) {
+            greeting.setText("Good Evening");
+        }
 
     }
 

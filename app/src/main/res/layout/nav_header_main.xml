@@ -16,20 +16,15 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher" />
-
         <TextView
+            android:id="@+id/greetingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="@string/nav_header_subtitle"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="#000000"
-            android:gravity="center_vertical"
-            android:textSize="14dp" />
+            android:textSize="16dp" />
     </LinearLayout>
 
     <View
