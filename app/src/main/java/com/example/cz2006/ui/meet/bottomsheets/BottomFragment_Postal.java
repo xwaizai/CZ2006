@@ -208,21 +208,20 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
                         lat.remove(i);
                         lng.remove(i);
                         travelTime.remove(i);
-                        GlobalHolder.getInstance().m_GMap.clear();
-                        break;
+                        geofenceHelper.removeMarker(i);
                     }
                 }
-                for(i=0; i<postcode.size(); i++){
-
-                    if (travelType.get(i).equals("car")) {
-                        r = travelTime.get(i)*600; //1250m/
-                    } else if (travelType.get(i).equals("train")) {
-                        r = travelTime.get(i)*300;
-                    } else if (travelType.get(i).equals("bus")) {
-                        r = (float) (travelTime.get(i)*225);
-                    }
-                    geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(i))), Double.parseDouble(String.valueOf(lng.get(i))), r, postalView, postalText);
-                }
+//                for(i=0; i<postcode.size(); i++){
+//
+//                    if (travelType.get(i).equals("car")) {
+//                        r = travelTime.get(i)*600; //1250m/
+//                    } else if (travelType.get(i).equals("train")) {
+//                        r = travelTime.get(i)*300;
+//                    } else if (travelType.get(i).equals("bus")) {
+//                        r = (float) (travelTime.get(i)*225);
+//                    }
+//                    geofenceHelper.createGeo(Double.parseDouble(String.valueOf(lat.get(i))), Double.parseDouble(String.valueOf(lng.get(i))), r, postalView, postalText);
+//                }
                 chipGroup.removeView(chip);
             }
         });

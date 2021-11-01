@@ -25,7 +25,13 @@ import com.akexorcist.googledirection.model.Route;
 import com.akexorcist.googledirection.util.DirectionConverter;
 import com.example.cz2006.GlobalHolder;
 import com.example.cz2006.R;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -36,7 +42,8 @@ import java.util.ArrayList;
 public class CarUI extends BottomSheetDialogFragment implements View.OnClickListener {
 
     private Polyline m_RouteLine;
-
+    private Marker destMarker;
+    private GoogleMap gMap;
     public CarUI()
     {
     }
@@ -44,6 +51,7 @@ public class CarUI extends BottomSheetDialogFragment implements View.OnClickList
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        gMap = GlobalHolder.getInstance().m_GMap;
         return inflater.inflate(R.layout.bottom_sheet_car, container, false);
     }
 
@@ -91,6 +99,22 @@ public class CarUI extends BottomSheetDialogFragment implements View.OnClickList
                                             getActivity(),directionPositionList,5,getResources().getColor(R.color.blue)
                                     );
                                     m_RouteLine = GlobalHolder.getInstance().m_GMap.addPolyline(polylineOptions);
+
+                                    LatLng start = leg.getStartLocation().getCoordination();
+                                    LatLng end = leg.getEndLocation().getCoordination();
+
+                                    final LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                                    builder.include(start);
+                                    builder.include(end);
+                                    LatLngBounds bounds = builder.build();
+
+                                    //Change the padding as per needed
+                                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,200);
+                                    gMap.setPadding(0,0,0,500);
+                                    gMap.animateCamera(cu);
+
+                                    //Add destination marker
+                                    destMarker = gMap.addMarker(new MarkerOptions().position(end).title("Destination"));
                                 }
                                 else
                                 {
@@ -129,6 +153,12 @@ public class CarUI extends BottomSheetDialogFragment implements View.OnClickList
                 break;
             case R.id.carBackBtn:
                 getParentFragmentManager().popBackStackImmediate();
+
+                destMarker.remove();
+                m_RouteLine.remove();
+                gMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(1.19, 103.812)));
+                gMap.setPadding(0,0,0,0);
+                gMap.animateCamera(CameraUpdateFactory.zoomTo(10.5f));
                 break;
         }
 

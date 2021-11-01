@@ -245,6 +245,7 @@ public class TransitUI extends Fragment implements View.OnClickListener  {
                 getParentFragmentManager().popBackStackImmediate();
 
                 destMarker.remove();
+                m_RouteLine.remove();
                 gMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(1.19, 103.812)));
                 gMap.setPadding(0,0,0,0);
                 gMap.animateCamera(CameraUpdateFactory.zoomTo(10.5f));

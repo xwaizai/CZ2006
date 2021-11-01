@@ -26,17 +26,23 @@ import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.ArrayList;
 
 public class GeofenceHelper extends ContextWrapper {
     private static final String TAG = "GeofenceHelper";
     //  private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     private GeofencingClient geofencingClient;
+    private ArrayList<Marker> markers = new ArrayList<>();
+    private ArrayList<Circle> circle = new ArrayList<>();
 
     PendingIntent pendingIntent;
 
@@ -76,8 +82,16 @@ public class GeofenceHelper extends ContextWrapper {
     private void addMarker(LatLng latLng, View v, String postal) {
         MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(postal)
                 .icon(bitmapDescriptorFromVector(v.getContext(), R.drawable.pin_circle_32));
-        GlobalHolder.getInstance().m_GMap.addMarker(markerOptions);
+        markers.add(GlobalHolder.getInstance().m_GMap.addMarker(markerOptions));
 
+    }
+
+    public void removeMarker(int i) {
+        Log.d("removeMarker: ", Integer.toString(i));
+        markers.get(i).remove();
+        markers.remove(i);
+        circle.get(i).remove();
+        circle.remove(i);
     }
 
     private void addCircle(LatLng latLng, float radius) {
@@ -87,7 +101,7 @@ public class GeofenceHelper extends ContextWrapper {
         circleOptions.strokeColor(Color.argb(255, 255, 0, 0));
         circleOptions.strokeColor(Color.argb(64, 255, 0, 0));
         circleOptions.strokeWidth(4);
-        GlobalHolder.getInstance().m_GMap.addCircle(circleOptions);
+        circle.add(GlobalHolder.getInstance().m_GMap.addCircle(circleOptions));
     }
 
     private void addGeofence(LatLng latLng, float radius) {
