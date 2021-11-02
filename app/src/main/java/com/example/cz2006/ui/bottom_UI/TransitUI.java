@@ -2,6 +2,7 @@ package com.example.cz2006.ui.bottom_UI;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.util.Log;
@@ -30,6 +31,7 @@ import com.akexorcist.googledirection.model.Step;
 import com.akexorcist.googledirection.util.DirectionConverter;
 import com.example.cz2006.GlobalHolder;
 import com.example.cz2006.R;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -59,6 +61,8 @@ public class TransitUI extends Fragment implements View.OnClickListener  {
     private TransitRecyclerViewAdapter adapter;
     private GoogleMap gMap;
     private Marker destMarker;
+    private ShimmerFrameLayout shimmerContainer;
+    private View transitInfo;
 
     public TransitUI()
     {
@@ -74,6 +78,12 @@ public class TransitUI extends Fragment implements View.OnClickListener  {
         goBtn.setOnClickListener(this);
 
         gMap = GlobalHolder.getInstance().m_GMap;
+
+        shimmerContainer = transitView.findViewById(R.id.shimmer_transit);
+        transitInfo = transitView.findViewById(R.id.transitInfo);
+        transitInfo.setVisibility(View.GONE);
+        shimmerContainer.setVisibility(View.VISIBLE);
+        shimmerContainer.startShimmer();
 
         return transitView;
     }
@@ -200,6 +210,14 @@ public class TransitUI extends Fragment implements View.OnClickListener  {
                                 {
                                     Toast.makeText(context, "Navigation error: " + status, Toast.LENGTH_SHORT);
                                 }
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        shimmerContainer.setVisibility(View.GONE);
+                                        transitInfo.setVisibility(View.VISIBLE);
+                                    }
+                                }, 500);
                             }
 
                             @Override

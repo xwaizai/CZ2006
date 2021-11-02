@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.akexorcist.googledirection.model.Route;
 import com.akexorcist.googledirection.util.DirectionConverter;
 import com.example.cz2006.GlobalHolder;
 import com.example.cz2006.R;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -44,6 +46,9 @@ public class CarUI extends BottomSheetDialogFragment implements View.OnClickList
     private Polyline m_RouteLine;
     private Marker destMarker;
     private GoogleMap gMap;
+    private ShimmerFrameLayout shimmerContainer;
+    private View carInfo;
+
     public CarUI()
     {
     }
@@ -52,7 +57,15 @@ public class CarUI extends BottomSheetDialogFragment implements View.OnClickList
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         gMap = GlobalHolder.getInstance().m_GMap;
-        return inflater.inflate(R.layout.bottom_sheet_car, container, false);
+
+        View carView = inflater.inflate(R.layout.bottom_sheet_car, container, false);
+        shimmerContainer = carView.findViewById(R.id.shimmer_car);
+        carInfo = carView.findViewById(R.id.car_info);
+        carInfo.setVisibility(View.GONE);
+        shimmerContainer.setVisibility(View.VISIBLE);
+        shimmerContainer.startShimmer();
+
+        return carView;
     }
 
     @Override
@@ -120,6 +133,14 @@ public class CarUI extends BottomSheetDialogFragment implements View.OnClickList
                                 {
                                     Toast.makeText(context, "Navigation error: " + status, Toast.LENGTH_SHORT);
                                 }
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        shimmerContainer.setVisibility(View.GONE);
+                                        carInfo.setVisibility(View.VISIBLE);
+                                    }
+                                }, 500);
                             }
 
                             @Override

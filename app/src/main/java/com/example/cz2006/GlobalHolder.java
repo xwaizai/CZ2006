@@ -2,6 +2,8 @@ package com.example.cz2006;
 
 import com.example.cz2006.ui.covid_cluster.PlaceInfo;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
 
@@ -19,6 +21,8 @@ public class GlobalHolder {
     public ArrayList<String> postalLat = new ArrayList<>();
     public ArrayList<String> postalLng = new ArrayList<>();
     public ArrayList<String> postalTravelType = new ArrayList<>();
+    public ArrayList<Marker> markerList = new ArrayList<>();
+    public ArrayList<Circle> circleList = new ArrayList<>();
 
     private GlobalHolder()
     {

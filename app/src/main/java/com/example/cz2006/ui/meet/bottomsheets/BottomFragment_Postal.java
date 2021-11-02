@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.cz2006.GlobalHolder;
 import com.example.cz2006.R;
 import com.example.cz2006.ui.meet.MeetMGR;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.chip.Chip;
@@ -86,7 +87,7 @@ public class BottomFragment_Postal extends Fragment implements View.OnClickListe
             case R.id.goBtn: {
                 // Do something for go Button
                 if(postcode.size() > 1) {
-                    Toast.makeText(getContext(), "Go", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "Go", Toast.LENGTH_SHORT).show();
 
                     chipGroup.setVisibility(View.GONE);
 

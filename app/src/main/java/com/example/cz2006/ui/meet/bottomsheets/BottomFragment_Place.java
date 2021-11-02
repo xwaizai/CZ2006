@@ -1,6 +1,7 @@
 package com.example.cz2006.ui.meet.bottomsheets;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.example.cz2006.GlobalHolder;
 import com.example.cz2006.R;
 import com.example.cz2006.ui.covid_cluster.PlaceInfo;
 import com.example.cz2006.ui.meet.PlaceMGR;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
@@ -39,6 +41,10 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
     private ArrayList<String> sLat = new ArrayList<>();
     private ArrayList<String> sLng = new ArrayList<>();
     private ArrayList<String> vicinity = new ArrayList<>();
+
+    private RecyclerView recyclerView;
+
+    private ShimmerFrameLayout shimmerContainer;
 
     @Nullable
     @Override
@@ -68,12 +74,20 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
         MaterialButton nextBtn = placeView.findViewById(R.id.nextBtn);
         nextBtn.setOnClickListener(this);
 
+        recyclerView = placeView.findViewById(R.id.placeRecyclerView);
+
+        shimmerContainer = placeView.findViewById(R.id.shimmer_place);
+        recyclerView.setVisibility(View.GONE);
+        shimmerContainer.setVisibility(View.VISIBLE);
+        shimmerContainer.startShimmer();
+
         return placeView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         Bundle bundle = getArguments();
         String lat = bundle.getString("lat");
@@ -95,6 +109,19 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
         }
 
         initRecyclerView();
+
+//        if(shimmerContainer.isShimmerVisible()) {
+//            shimmerContainer.setVisibility(View.GONE);
+//            shimmerContainer.stopShimmer();
+//        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                shimmerContainer.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+        }, 500);
+
         // Search Bar
         TextInputEditText search = placeView.findViewById(R.id.placesInput);
 
@@ -162,7 +189,6 @@ public class BottomFragment_Place extends Fragment implements View.OnClickListen
     }
 
     private void initRecyclerView(){
-        RecyclerView recyclerView = placeView.findViewById(R.id.placeRecyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
         adapter = new PlaceRecyclerViewAdapter(placeName, placeAdd,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));

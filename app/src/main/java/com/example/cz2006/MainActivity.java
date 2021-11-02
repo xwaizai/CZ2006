@@ -52,12 +52,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_close
         );
 
-
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         displayView(R.id.nav_meet);
 
+        // Setting Good Morning Text in the drawer
         View headerView = navigationView.getHeaderView(0);
         TextView greeting = headerView.findViewById(R.id.greetingText);
         Calendar c = Calendar.getInstance();

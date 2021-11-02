@@ -7,54 +7,118 @@
     android:background="@drawable/rounded_top_corners"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/finalDestination"
-        android:layout_width="wrap_content"
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_transit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/map_marker"
-        android:textSize="18dp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textColor="@color/black"/>
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="150dp"
+                android:layout_height="24dp"
+                android:background="#e9e9e9" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <View
+                    android:layout_width="80dp"
+                    android:layout_height="18dp"
+                    android:background="#e9e9e9" />
+
+                <View
+                    android:layout_width="80dp"
+                    android:layout_height="18dp"
+                    android:background="#e9e9e9"
+                    android:layout_marginLeft="10dp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e9e9e9"
+                android:layout_marginBottom="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <include layout="@layout/placeholder_layout"/>
+            </LinearLayout>
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/transitInfo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
-
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/totalTime"
+            android:id="@+id/finalDestination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="20dp"
+            android:drawableLeft="@drawable/map_marker"
+            android:textSize="18dp"
+            android:layout_gravity="center_vertical"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/black"/>
 
-        <TextView
-            android:id="@+id/totalDist"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="20dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/quantum_grey700"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+
+            <TextView
+                android:id="@+id/totalTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/totalDist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="20dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/quantum_grey700"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
+
+        <!--TODO: RecyclerView thingy here-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/transitRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layoutManager="LinearLayoutManager"
+            android:scrollbars="vertical"/>
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"/>
 
-    <!--TODO: RecyclerView thingy here-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/transitRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layoutManager="LinearLayoutManager"
-        android:scrollbars="vertical"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
