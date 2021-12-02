@@ -25,7 +25,8 @@ Below will be solely focus on documentation of this project and features codes t
 
 ![7  System Architecture](https://user-images.githubusercontent.com/13762085/144356382-08172c01-10d9-4f5b-9135-32c0bfeca949.png)
 
-# How to scrape data from MOH website
+# Display cluster data from MOH website
+![clusterDisplayModified](https://user-images.githubusercontent.com/13762085/144360422-aaec364c-9617-4afd-a5be-b351013c7b65.png)
 
 First, the link to the MOH website needs to be established such as:
 
@@ -73,6 +74,8 @@ new Thread() {
 }.start();
 ```
 # Navigation and drawing the lines on the map
+![routedisplayModified](https://user-images.githubusercontent.com/13762085/144360412-0f476018-7040-40c6-a432-dd0f7d4b7332.png)
+
 Getting navigation between 2 places from the Google Map is difficult and drawing the polylines can even more difficult as developers will have to slowly iterate through the list of coordinates to draw individual lines. Thus using a [3rd party library](https://github.com/akexorcist/GoogleDirectionLibrary.git) helps the development of this feature significantly!
 ```
 GoogleDirection.withServerKey("YOUR GOOGLE API KEY")
